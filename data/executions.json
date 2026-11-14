@@ -1,4 +1,29 @@
 {
   "schemaVersion": 1,
-  "executions": []
+  "executions": [
+    {
+      "bookingDurationSeconds": null,
+      "outcome": "Technical failure",
+      "confirmedAt": null,
+      "schemaVersion": 1,
+      "startedAt": "2026-11-14T19:36:11.384979798+01:00",
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        }
+      ],
+      "requested": null,
+      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
+      "booked": null,
+      "players": null,
+      "executionDate": "2026-11-14",
+      "blockedAt": null,
+      "playDate": "2026-11-16",
+      "availability": [],
+      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
+      "executionId": "43624186514-1"
+    }
+  ]
 }
