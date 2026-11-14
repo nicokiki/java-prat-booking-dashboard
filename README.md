@@ -38,6 +38,22 @@ The archive preserves one entry per execution ID. Availability comparisons filte
 
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.
 
+## Deleting an Execution
+
+1. Select the execution in **Execution history** and click **Delete** in its details.
+2. Confirm the ID in the dialog. **Cancel** leaves everything unchanged; **Copy ID** copies the selected ID.
+3. Choose **Continue in GitHub** to open the booking repository's [Delete dashboard execution (no booking)](https://github.com/nicokiki/java-prat-booking/actions/workflows/delete-dashboard-execution.yml) workflow. Click **Run workflow** on `main`, paste the ID into `execution_id`, and set `confirmation` to **yes**. The ID is not automatically prefilled.
+4. Run it as the repository owner. After the deletion commit and Pages deployment succeed, refresh the dashboard.
+
+The page does not contain a token or directly perform deletion. Only an explicit,
+owner-approved workflow removes the matching execution and its embedded availability
+snapshots from the archive. It preserves other executions and fails without mutation
+for invalid or missing IDs. A conflicting publication rejects the push safely;
+inspect the failure before retrying the deletion workflow.
+
+Deletion does not cancel a TeeOne reservation, remove an Actions artifact, or erase
+Git history. Opening the dialog or running a fixture test never deletes real data.
+
 ## Step 7: First-Run Verification
 
 Verify the next normal scheduled booking, not an extra test booking:

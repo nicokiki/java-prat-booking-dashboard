@@ -78,6 +78,15 @@ tr.selected td:first-child { border-left: 2px solid var(--accent); padding-left:
 .detail { margin-top: 26px; background: var(--paper); border-top: 2px solid var(--accent); padding: 24px; }
 .detail-heading { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
 .detail-heading h2 { margin: 0; }
+.detail-actions, .delete-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+#delete-execution { color: var(--failure); }
+.delete-dialog { width: 480px; max-width: calc(100vw - 32px); max-height: calc(100dvh - 32px); overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--fg); }
+.delete-dialog::backdrop { background: rgb(0 0 0 / 40%); }
+.delete-dialog h2 { font-size: 18px; margin-bottom: 12px; }
+.delete-dialog code { display: block; margin: 16px 0; overflow-wrap: anywhere; }
+.delete-actions { margin-top: 20px; justify-content: flex-end; }
+.workflow-link { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 12px; border-radius: 4px; background: var(--accent); color: var(--paper); text-decoration: none; }
+#delete-copy-status { min-height: 21px; margin-top: 12px; }
 .detail-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; margin-top: 24px; }
 .detail dd { font-weight: 500; }
 .outcome-note { padding: 12px 14px; margin-top: 18px; background: var(--surface); color: #426257; font-size: 12px; border-left: 2px solid #b7d5c5; }
@@ -193,7 +202,7 @@ pre { background: var(--bg); border-radius: 4px; }
     <p class="caption" id="row-count">Loading saved execution JSON</p>
   </section>
   <section class="detail" aria-labelledby="detail-title">
-    <div class="detail-heading"><h2 id="detail-title"></h2><span class="status" id="detail-status"></span></div>
+    <div class="detail-heading"><h2 id="detail-title"></h2><div class="detail-actions"><span class="status" id="detail-status"></span><sp-action-button id="delete-execution" disabled aria-haspopup="dialog">Delete</sp-action-button></div></div>
     <div class="detail-grid"><div><dl id="facts"></dl></div><div><p class="outcome-note" id="note"></p></div></div>
     <sp-tabs id="detail-tabs" selected="availability" aria-label="Execution details"><sp-tab id="timeline-tab" label="Summary" value="timeline"></sp-tab><sp-tab id="availability-tab" label="Tee times" value="availability"></sp-tab><sp-tab id="logs-tab" label="Public JSON" value="logs"></sp-tab><sp-tab-panel id="summary-panel" value="timeline"></sp-tab-panel><sp-tab-panel id="execution-availability" value="availability"></sp-tab-panel><sp-tab-panel id="json-panel" value="logs"></sp-tab-panel></sp-tabs>
   </section>
@@ -210,6 +219,13 @@ pre { background: var(--bg); border-radius: 4px; }
   </section>
   <footer><span>Public booking results &middot; names and licencias are public when recorded</span><span>Europe/Madrid &middot; no live monitoring</span></footer>
 </main>
+<dialog id="delete-dialog" class="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description">
+  <h2 id="delete-title">Delete execution?</h2>
+  <p id="delete-description">Remove this execution and its availability snapshots from the public dashboard? GitHub approval is required. This does not cancel a TeeOne reservation or erase Git history and backup artifacts.</p>
+  <code id="delete-id"></code>
+  <p id="delete-copy-status" class="muted" role="status"></p>
+  <div class="delete-actions"><sp-action-button id="cancel-delete" autofocus>Cancel</sp-action-button><sp-action-button id="copy-delete-id">Copy ID</sp-action-button><a id="delete-workflow" class="workflow-link" href="https://github.com/nicokiki/java-prat-booking/actions/workflows/delete-dashboard-execution.yml" target="_blank" rel="noopener noreferrer">Continue in GitHub</a></div>
+</dialog>
 </sp-theme>
 <script type="module">
 import './spectrum.bundle.js';
@@ -253,6 +269,30 @@ const executionAvailability = Object.fromEntries(runs.map(run => [run.id,run.rep
 const availabilityArchive = Object.values(executionAvailability).flat();
 let selected = runs[0];
 let tab = 'availability';
+let pendingDeletionId;
+const deleteDialog = document.getElementById('delete-dialog');
+document.getElementById('delete-execution').addEventListener('click', () => {
+  if (!selected) return;
+  pendingDeletionId = selected.id;
+  document.getElementById('delete-id').textContent = pendingDeletionId;
+  document.getElementById('delete-copy-status').textContent = '';
+  deleteDialog.showModal();
+});
+document.getElementById('cancel-delete').addEventListener('click', () => deleteDialog.close());
+deleteDialog.addEventListener('keydown', event => {
+  if (event.key === 'Escape') { event.preventDefault(); deleteDialog.close(); }
+});
+deleteDialog.addEventListener('close', () => { if (!deleteDialog.open) pendingDeletionId = undefined; });
+document.getElementById('copy-delete-id').addEventListener('click', async () => {
+  if (!pendingDeletionId) return;
+  try {
+    await navigator.clipboard.writeText(pendingDeletionId);
+    document.getElementById('delete-copy-status').textContent = 'Execution ID copied.';
+  } catch (error) {
+    document.getElementById('delete-copy-status').textContent = 'Copy unavailable. Execution ID: '+pendingDeletionId;
+  }
+});
+document.getElementById('delete-workflow').addEventListener('click', () => deleteDialog.close());
 const escape = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 function outcomeBadge(outcome) {
   const variant = {'Confirmed':'positive', 'Uncertain':'notice', 'Technical failure':'negative'}[outcome] || 'neutral';
@@ -351,7 +391,7 @@ function renderAvailabilityHistory() {
   }).join('');
   container.innerHTML = '<table class="availability-matrix"><thead><tr><th scope="col">Course / Tee time</th>'+headings+'</tr></thead><tbody>'+rows+'</tbody></table>';
 }
-function render() { renderTable(); document.querySelector('.detail').hidden = !selected; if (selected) renderDetail(); }
+function render() { renderTable(); document.getElementById('delete-execution').disabled = !selected; document.querySelector('.detail').hidden = !selected; if (selected) renderDetail(); }
 document.getElementById('filter').addEventListener('change', () => { selected = visibleRuns()[0]; render(); });
 document.getElementById('detail-tabs').addEventListener('change', event => { tab = event.currentTarget.selected; if (selected) renderDetail(); });
 const dates = [...new Set(availabilityArchive.map(snapshot => snapshot.playDate))].sort().reverse();
