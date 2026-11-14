@@ -13,8 +13,8 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 'Sourc
 .sitebar { background: var(--paper); border-bottom: 1px solid var(--line); }
 .sitebar-inner { max-width: 1240px; min-height: 72px; padding: 12px 32px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .brand { display: flex; gap: 12px; align-items: center; font-size: 15px; font-weight: 700; }
-.brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 6px; color: var(--paper); background: var(--accent); font-size: 17px; }
-.brand span:last-child { font-weight: 400; color: var(--muted); font-size: 12px; border-left: 1px solid var(--line); padding-left: 12px; }
+.brand-mark { display: block; width: 60px; height: 48px; flex-shrink: 0; object-fit: contain; }
+.brand-title { overflow-wrap: anywhere; }
 .navigation { display: flex; gap: 24px; align-items: center; font-size: 12px; }
 .navigation a { color: var(--muted); text-decoration: none; padding: 8px 0; }
 .navigation a:hover { color: var(--accent); }
@@ -106,7 +106,6 @@ header, .summary, .top-grid { animation: arrive 350ms ease-out both; }
 @keyframes arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 720px) {
   .sitebar-inner { padding: 12px 20px; flex-wrap: wrap; gap: 8px; }
-  .brand span:last-child { display: none; }
   .navigation { gap: 20px; }
   main { padding: 26px 20px 32px; }
   header { flex-direction: column; align-items: flex-start; gap: 14px; }
@@ -126,8 +125,7 @@ header, .summary, .top-grid { animation: arrive 350ms ease-out both; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } header, .summary, .top-grid { animation: none; } }
 sp-theme { display: block; min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Source Sans 3', sans-serif; --spectrum-sans-font-family: 'Source Sans 3', sans-serif; --bg: var(--spectrum-gray-100, #f8f8f8); --fg: var(--spectrum-gray-900, #222222); --muted: var(--spectrum-gray-700, #6e6e6e); --accent: var(--spectrum-blue-900, #0265dc); --line: var(--spectrum-gray-300, #e1e1e1); --paper: var(--spectrum-gray-50, #ffffff); }
-.brand, .brand-mark { font-weight: 600; }
-.brand-mark { background: var(--fg); }
+.brand { font-weight: 600; }
 .stat:nth-child(2) .value, .upcoming dd strong { color: var(--spectrum-green-900, #008a39); }
 .toolbar .filter-control { display: flex; align-items: center; gap: 12px; }
 sp-picker { width: 190px; max-width: 100%; }
@@ -174,10 +172,10 @@ pre { background: var(--bg); border-radius: 4px; }
 </head>
 <body>
 <sp-theme system="spectrum" color="light" scale="medium" lang="en">
-<div class="sitebar"><div class="sitebar-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">T</span>TeeOne<span>Booking workspace</span></div><nav class="navigation" aria-label="Page sections"><a href="#overview">Overview</a><a href="#history-title">Executions</a><a href="#availability-title">Availability</a><a href="#detail-title">Details</a></nav></div></div>
+<div class="sitebar"><div class="sitebar-inner"><div class="brand"><img class="brand-mark" src="./rcgep-logo.png" width="120" height="95" alt="Real Club de Golf El Prat"><span class="brand-title">Tee Times - Booking - Dashboard</span></div><nav class="navigation" aria-label="Page sections"><a href="#overview">Overview</a><a href="#history-title">Executions</a><a href="#availability-title">Availability</a><a href="#detail-title">Details</a></nav></div></div>
 <main id="overview">
   <header>
-    <div><div class="eyebrow muted">Royal El Prat</div><h1>Booking results</h1><p class="muted" id="execution-range">Saved executions &middot; Europe/Madrid</p></div>
+    <div><div class="eyebrow muted">Real Club de Golf El Prat</div><h1>Booking results</h1><p class="muted" id="execution-range">Saved executions &middot; Europe/Madrid</p></div>
     <div><sp-status-light variant="neutral" size="s">Public dashboard</sp-status-light><p class="caption">Source: saved execution JSON</p></div>
   </header>
   <section class="notice" hidden aria-label="Attention required"></section>
@@ -211,7 +209,6 @@ pre { background: var(--bg); border-radius: 4px; }
     <div class="availability-controls">
       <div class="availability-control"><sp-field-label for="availability-date">Play date</sp-field-label><sp-picker id="availability-date" label="Play date"></sp-picker></div>
       <div class="availability-control"><sp-field-label for="availability-course">Course</sp-field-label><sp-picker id="availability-course" value="all" label="Course"><sp-menu-item value="all">All courses</sp-menu-item><sp-menu-item value="Rosa">Rosa</sp-menu-item><sp-menu-item value="Amarillo">Amarillo</sp-menu-item><sp-menu-item value="Verde">Verde</sp-menu-item></sp-picker></div>
-      <div class="availability-control"><sp-field-label for="availability-players">Players</sp-field-label><sp-picker id="availability-players" value="2" label="Players"><sp-menu-item value="2">2 players</sp-menu-item><sp-menu-item value="4">4 players</sp-menu-item></sp-picker></div>
     </div>
     <p class="snapshot-note" id="availability-context"></p>
     <div class="table-wrap" id="availability-matrix"></div>
@@ -361,12 +358,13 @@ function renderExecutionAvailability() {
 function matrixCell(snapshot, previousSnapshot, time) {
   if (!snapshot) return '<td class="muted">Not checked</td>';
   const option = snapshot.options.find(item => item.time === time);
-  const previous = previousSnapshot?.options.find(item => item.time === time);
+  const comparablePrevious = previousSnapshot?.players === snapshot.players ? previousSnapshot : null;
+  const previous = comparablePrevious?.options.find(item => item.time === time);
   const title = 'Captured '+captureLabel(snapshot);
   if (!option) return '<td title="'+title+'"><span class="muted">Not offered</span>'+(previous?.enabled ? '<span class="sub change-down">Removed since previous</span>' : '')+'</td>';
   if (!option.enabled) return '<td title="'+title+'"><span class="muted">Disabled</span></td>';
   let change = '';
-  if (previousSnapshot && (!previous || !previous.enabled)) change = '<span class="sub change-up">Newly available</span>';
+  if (comparablePrevious && (!previous || !previous.enabled)) change = '<span class="sub change-up">Newly available</span>';
   else if (previous?.enabled && previous.places !== null && option.places !== null && previous.places !== option.places) {
     const difference = option.places - previous.places;
     change = '<span class="sub '+(difference > 0 ? 'change-up' : 'change-down')+'">'+(difference > 0 ? '+' : '')+difference+' '+(Math.abs(difference) === 1 ? 'place' : 'places')+' since previous</span>';
@@ -377,13 +375,12 @@ function matrixCell(snapshot, previousSnapshot, time) {
 function renderAvailabilityHistory() {
   const play = document.getElementById('availability-date').value;
   const course = document.getElementById('availability-course').value || 'all';
-  const players = Number(document.getElementById('availability-players').value || '2');
-  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === play && snapshot.players === players && snapshot.holes === 18);
+  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === play && snapshot.holes === 18);
   const groups = [...new Set(snapshots.map(snapshot => snapshot.executionId))].map(id => ({id, snapshots:snapshots.filter(snapshot => snapshot.executionId === id)})).sort((first,second) => first.snapshots[0].capturedAt.localeCompare(second.snapshots[0].capturedAt));
-  document.getElementById('availability-context').textContent = play ? 'Play: '+formatDate(play)+' | '+players+' players | '+groups.length+' executions | Offered places, including slots outside the booking window' : 'No availability snapshots recorded.';
+  document.getElementById('availability-context').textContent = play ? 'Play: '+formatDate(play)+' | '+groups.length+' executions | Offered places, including slots outside the booking window' : 'No availability snapshots recorded.';
   const container = document.getElementById('availability-matrix');
-  if (!groups.length) { container.innerHTML = '<p class="availability-empty">No snapshots for this play date and player count.</p>'; return; }
-  const headings = groups.map(group => '<th scope="col">'+escape(captureLabel(group.snapshots[0]))+'<span class="sub">'+escape(group.id)+'</span></th>').join('');
+  if (!groups.length) { container.innerHTML = '<p class="availability-empty">No snapshots for this play date.</p>'; return; }
+  const headings = groups.map(group => '<th scope="col">'+escape(captureLabel(group.snapshots[0]))+'<span class="sub">'+escape(group.id)+'</span><span class="sub">'+escape(group.snapshots[0].players)+' players</span></th>').join('');
   const rows = (course === 'all' ? [...new Set(snapshots.map(snapshot => snapshot.course))] : [course]).map(courseName => {
     const times = [...new Set(snapshots.filter(snapshot => snapshot.course === courseName).flatMap(snapshot => snapshot.options.map(option => option.time)))].sort();
     if (!times.length) return '<tr><td>'+courseName+'</td>'+groups.map(group => matrixCell(group.snapshots.find(snapshot => snapshot.course === courseName), null, '')).join('')+'</tr>';
@@ -398,11 +395,7 @@ const dates = [...new Set(availabilityArchive.map(snapshot => snapshot.playDate)
 document.getElementById('availability-date').innerHTML = dates.map(date => '<sp-menu-item value="'+date+'">'+formatDate(date)+'</sp-menu-item>').join('');
 document.getElementById('availability-date').value = dates[0] || '';
 document.getElementById('availability-date').disabled = !dates.length;
-const playerCounts = [...new Set(availabilityArchive.map(snapshot => snapshot.players))].sort((first,second) => first-second);
-document.getElementById('availability-players').innerHTML = playerCounts.map(count => '<sp-menu-item value="'+count+'">'+count+' players</sp-menu-item>').join('');
-document.getElementById('availability-players').value = String(playerCounts[0] || 2);
-document.getElementById('availability-players').disabled = !playerCounts.length;
-['availability-date','availability-course','availability-players'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
+['availability-date','availability-course'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
 function renderOverview() {
   const counts = ['Confirmed','Unavailable','Technical failure','Uncertain'].map(outcome => runs.filter(run => run.outcome === outcome).length);
   const durations = runs.filter(run => run.outcome === 'Confirmed' && typeof run.duration === 'number').map(run => run.duration).sort((first,second) => first-second);

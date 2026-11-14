@@ -34,7 +34,7 @@ The repository contains the static HTML and bundled Spectrum JavaScript, stylesh
 
 The booking repository's workflow backs up each report, then publishes an allowlisted record using `DASHBOARD_PUBLISH_TOKEN`. This publishing secret belongs only in the booking repository's Actions secrets, never in this site or its JavaScript.
 
-The archive preserves one entry per execution ID. Availability comparisons filter by full play date, player count, and 18 holes; only observed courses have snapshots. New availability-only schedules are not part of this integration.
+The archive preserves one entry per execution ID. Availability history filters by full play date and course, showing all recorded player counts for 18-hole snapshots. Each execution column labels its player count; change indicators only compare snapshots with matching player counts. Only observed courses have snapshots. New availability-only schedules are not part of this integration.
 
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.
 
