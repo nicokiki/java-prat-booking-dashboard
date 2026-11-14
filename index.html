@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TeeOne booking dashboard - Sample data</title>
+<title>TeeOne booking dashboard</title>
 <link rel="stylesheet" href="./spectrum.bundle.css">
 <style>
 :root { color-scheme: light; --bg: #f8f8f8; --fg: #222222; --muted: #6e6e6e; --accent: #0265dc; --line: #e1e1e1; --surface: #e5f0ff; --paper: #ffffff; --success-bg: #e9f6ee; --warning: #8f5c11; --warning-bg: #fff4dc; --failure: #b40000; --failure-bg: #ffebeb; }
@@ -31,6 +31,7 @@ p { margin: 4px 0; }
 .sample::before { content: ''; width: 5px; height: 5px; background: var(--accent); border-radius: 1px; }
 .notice { padding: 12px 16px; background: var(--warning-bg); color: var(--warning); display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; border-left: 3px solid #dca74b; font-size: 12px; }
 .notice strong { font-weight: 600; }
+.notice[hidden] { display: none; }
 .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding: 30px 0; border-bottom: 1px solid var(--line); }
 .stat { border-left: 1px solid var(--line); padding-left: 24px; }
 .stat:first-child { border: 0; padding-left: 0; }
@@ -167,33 +168,29 @@ pre { background: var(--bg); border-radius: 4px; }
 <div class="sitebar"><div class="sitebar-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">T</span>TeeOne<span>Booking workspace</span></div><nav class="navigation" aria-label="Page sections"><a href="#overview">Overview</a><a href="#history-title">Executions</a><a href="#availability-title">Availability</a><a href="#detail-title">Details</a></nav></div></div>
 <main id="overview">
   <header>
-    <div><div class="eyebrow muted">Royal El Prat</div><h1>Booking results</h1><p class="muted">06-13 Nov 2026 &middot; Europe/Madrid</p></div>
-    <div><sp-status-light variant="neutral" size="s">Public preview / Sample data</sp-status-light><p class="caption">Last sample result: 13 Nov, 20:00 CET</p></div>
+    <div><div class="eyebrow muted">Royal El Prat</div><h1>Booking results</h1><p class="muted" id="execution-range">Saved executions &middot; Europe/Madrid</p></div>
+    <div><sp-status-light variant="neutral" size="s">Public dashboard</sp-status-light><p class="caption">Source: saved execution JSON</p></div>
   </header>
-  <section class="notice" aria-label="Attention required"><sp-status-light variant="notice" size="s">1 result needs verification</sp-status-light><span>11 Nov: reservation submitted, but confirmation was not recorded. Check TeeOne before retrying.</span></section>
-  <section class="summary" aria-label="Outcome totals for seven recorded executions">
-    <div class="stat"><span class="value">7</span><span class="stats-label">Recorded executions</span><span class="sub">Results saved by the booking app</span></div>
-    <div class="stat"><span class="value">4 / 7</span><span class="stats-label">Confirmed bookings</span><span class="sub">57.1% of recorded executions</span></div>
-    <div class="stat"><span class="value">2</span><span class="stats-label">Not booked</span><span class="sub">1 unavailable &middot; 1 technical failure</span></div>
-    <div class="stat"><span class="value">10.8 s</span><span class="stats-label">Median booking duration</span><span class="sub">4 confirmed results &middot; form start to confirmation</span></div>
+  <section class="notice" hidden aria-label="Attention required"></section>
+  <section class="summary" aria-label="Saved execution outcomes">
+    <div class="stat"><span class="value">0</span><span class="stats-label">Recorded executions</span><span class="sub">Loading saved results</span></div>
+    <div class="stat"><span class="value">0 / 0</span><span class="stats-label">Confirmed bookings</span><span class="sub">No results loaded</span></div>
+    <div class="stat"><span class="value">0</span><span class="stats-label">Not booked</span><span class="sub">No results loaded</span></div>
+    <div class="stat"><span class="value">--</span><span class="stats-label">Median booking duration</span><span class="sub">No durations recorded</span></div>
   </section>
   <section class="top-grid">
-    <div><h2>Recorded execution outcomes</h2><div class="distribution" role="img" aria-label="Outcome categories: four confirmed, one unavailable, one technical failure and one uncertain out of seven recorded executions. Horizontal axis: execution count from zero to four.">
-      <span>Confirmed</span><div class="track"><div class="bar" style="width:100%"></div></div><span>4</span>
-      <span>Unavailable</span><div class="track"><div class="bar secondary" style="width:25%"></div></div><span>1</span>
-      <span>Technical failure</span><div class="track"><div class="bar secondary" style="width:25%"></div></div><span>1</span>
-      <span>Uncertain</span><div class="track"><div class="bar secondary" style="width:25%"></div></div><span>1</span>
-    </div><div class="axis"><span>0</span><span>2</span><span>4 executions</span></div><p class="caption">Source: fictional result JSON &middot; 06-13 Nov 2026. One result per execution.</p></div>
-    <div class="upcoming"><h2>Latest confirmed booking</h2><dl>
-      <dt>Execution</dt><dd>13 Nov 2026</dd><dt>Play date</dt><dd>15 Nov 2026</dd>
-      <dt>Requested</dt><dd>Rosa &middot; 08:30</dd><dt>Booked</dt><dd><strong>Amarillo &middot; 08:25</strong></dd>
-      <dt>Players</dt><dd>2</dd><dt>Confirmed at</dt><dd>20:00:13.200 CET</dd>
-    </dl><p class="caption">Alternate course selected because Rosa had no eligible slot.</p></div>
+    <div><h2>Recorded execution outcomes</h2><div class="distribution" role="img" aria-label="Execution outcomes not loaded">
+      <span>Confirmed</span><div class="track"><div class="bar" style="width:0%"></div></div><span>0</span>
+      <span>Unavailable</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
+      <span>Technical failure</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
+      <span>Uncertain</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
+    </div><div class="axis"><span>0</span><span>1 execution</span></div><p class="caption">Source: saved execution JSON. One result per execution.</p></div>
+    <div class="upcoming"><h2>Latest confirmed booking</h2><p class="muted">Loading saved results</p></div>
   </section>
   <section aria-labelledby="history-title">
     <div class="toolbar"><h2 id="history-title">Execution history</h2><div class="filter-control"><sp-field-label for="filter" side-aligned="start">Outcome</sp-field-label><sp-picker id="filter" value="all" label="Outcome"><sp-menu-item value="all">All outcomes</sp-menu-item><sp-menu-item value="Confirmed">Confirmed</sp-menu-item><sp-menu-item value="Unavailable">Unavailable</sp-menu-item><sp-menu-item value="Technical failure">Technical failure</sp-menu-item><sp-menu-item value="Uncertain">Uncertain</sp-menu-item></sp-picker></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Execution / play date</th><th>Requested</th><th>Booked</th><th>Outcome</th><th>Confirmed at (CET)</th><th>Duration (s)</th></tr></thead><tbody id="runs"></tbody></table></div>
-    <p class="caption" id="row-count">Source: fictional public result JSON &middot; 7 recorded executions, 06-13 Nov 2026.</p>
+    <div class="table-wrap"><table><thead><tr><th>Execution / play date</th><th>Requested</th><th>Booked</th><th>Outcome</th><th>Confirmed at (Madrid)</th><th>Duration (s)</th></tr></thead><tbody id="runs"></tbody></table></div>
+    <p class="caption" id="row-count">Loading saved execution JSON</p>
   </section>
   <section class="detail" aria-labelledby="detail-title">
     <div class="detail-heading"><h2 id="detail-title"></h2><span class="status" id="detail-status"></span></div>
@@ -201,17 +198,17 @@ pre { background: var(--bg); border-radius: 4px; }
     <sp-tabs id="detail-tabs" selected="availability" aria-label="Execution details"><sp-tab id="timeline-tab" label="Summary" value="timeline"></sp-tab><sp-tab id="availability-tab" label="Tee times" value="availability"></sp-tab><sp-tab id="logs-tab" label="Public JSON" value="logs"></sp-tab><sp-tab-panel id="summary-panel" value="timeline"></sp-tab-panel><sp-tab-panel id="execution-availability" value="availability"></sp-tab-panel><sp-tab-panel id="json-panel" value="logs"></sp-tab-panel></sp-tabs>
   </section>
   <section class="availability-history" aria-labelledby="availability-title">
-    <div class="toolbar"><h2 id="availability-title">Availability history</h2><sp-status-light variant="neutral" size="s">Sample snapshots</sp-status-light></div>
+    <div class="toolbar"><h2 id="availability-title">Availability history</h2><sp-status-light variant="neutral" size="s">Recorded snapshots</sp-status-light></div>
     <div class="availability-controls">
-      <div class="availability-control"><sp-field-label for="availability-date">Play date</sp-field-label><sp-picker id="availability-date" value="15" label="Play date"></sp-picker></div>
-      <div class="availability-control"><sp-field-label for="availability-course">Course</sp-field-label><sp-picker id="availability-course" value="all" label="Course"><sp-menu-item value="all">Both courses</sp-menu-item><sp-menu-item value="Rosa">Rosa</sp-menu-item><sp-menu-item value="Amarillo">Amarillo</sp-menu-item></sp-picker></div>
+      <div class="availability-control"><sp-field-label for="availability-date">Play date</sp-field-label><sp-picker id="availability-date" label="Play date"></sp-picker></div>
+      <div class="availability-control"><sp-field-label for="availability-course">Course</sp-field-label><sp-picker id="availability-course" value="all" label="Course"><sp-menu-item value="all">All courses</sp-menu-item><sp-menu-item value="Rosa">Rosa</sp-menu-item><sp-menu-item value="Amarillo">Amarillo</sp-menu-item><sp-menu-item value="Verde">Verde</sp-menu-item></sp-picker></div>
       <div class="availability-control"><sp-field-label for="availability-players">Players</sp-field-label><sp-picker id="availability-players" value="2" label="Players"><sp-menu-item value="2">2 players</sp-menu-item><sp-menu-item value="4">4 players</sp-menu-item></sp-picker></div>
     </div>
     <p class="snapshot-note" id="availability-context"></p>
     <div class="table-wrap" id="availability-matrix"></div>
-    <p class="caption">Fictional availability archive, including availability-only executions without booking results. All snapshots use 18 holes and Europe/Madrid time. Not continuous monitoring.</p>
+    <p class="caption">Source: saved availability snapshots. Comparisons use the same play date, player count and 18 holes. Only checked courses are observed; not continuous monitoring.</p>
   </section>
-  <footer><span>Public sample dashboard &middot; fictional data</span><span>Real booking integration is not enabled &middot; no live monitoring</span></footer>
+  <footer><span>Public booking results &middot; names and licencias are public when recorded</span><span>Europe/Madrid &middot; no live monitoring</span></footer>
 </main>
 </sp-theme>
 <script type="module">
@@ -221,53 +218,39 @@ const mobileViewport = matchMedia('(max-width: 720px)');
 const updateScale = () => { theme.scale = mobileViewport.matches ? 'large' : 'medium'; };
 mobileViewport.addEventListener('change', updateScale);
 updateScale();
-const runs = [
-  {day:13, play:15, id:'sample-104', players:2, requested:'Rosa 08:30', booked:'Amarillo 08:25', outcome:'Confirmed', block:'20:00:07.055', confirmation:'20:00:13.200', duration:12.2, note:'Rosa had no eligible slot. Amarillo 08:25 was selected before BLOQUEAR and the successful reservation message was detected.'},
-  {day:11, play:13, id:'sample-102', players:2, requested:'Rosa 11:00', booked:'Not confirmed', outcome:'Uncertain', block:'20:00:07.410', note:'RESERVAR was submitted, but confirmation was not observed. Check existing TeeOne reservations before retrying.'},
-  {day:10, play:12, id:'sample-101', players:2, requested:'Rosa 09:15', booked:'Rosa 09:10', outcome:'Confirmed', block:'20:00:06.080', confirmation:'20:00:12.400', duration:11.4, note:'The earlier time won the equal-distance tie between 09:10 and 09:20. The requested course was retained.'},
-  {day:9, play:11, id:'sample-100', players:2, requested:'Rosa 11:00', booked:'Not submitted', outcome:'Unavailable', note:'Neither Rosa nor Amarillo had an eligible time inside 09:30-12:30. BLOQUEAR and RESERVAR were not clicked.'},
-  {day:8, play:10, id:'sample-099', players:2, requested:'Amarillo 08:00', booked:'Not submitted', outcome:'Technical failure', block:'20:00:07.120', note:'Required player addition could not be verified. RESERVAR was not clicked. Inspect TeeOne before manual recovery.'},
-  {day:7, play:9, id:'sample-098', players:4, requested:'Rosa 11:00', booked:'Rosa 11:00', outcome:'Confirmed', block:'20:00:05.200', confirmation:'20:00:10.200', duration:9.2, note:'The exact requested course and time were confirmed.'},
-  {day:6, play:8, id:'sample-097', players:2, requested:'Amarillo 08:00', booked:'Amarillo 08:05', outcome:'Confirmed', block:'20:00:06.100', confirmation:'20:00:11.100', duration:10.1, note:'The closest offered time was 08:05, five minutes after the requested time.'}
-];
-const sampleParticipants = [
-  {role:'booking-holder', name:'Alex Example', licencia:'DEMO-0001'},
-  {role:'socio', name:'Sam Example', licencia:'DEMO-0002'},
-  {role:'socio', name:'Jamie Example', licencia:'DEMO-0003'},
-  {role:'socio', name:'Taylor Example', licencia:'DEMO-0004'}
-];
-const executionParticipants = Object.fromEntries(runs.map(run => [run.id, sampleParticipants.slice(0,run.players)]));
-function makeSnapshot(run, course, time, options, selectedTime = null) {
-  return {executionId:run.id, playDate:'2026-11-'+String(run.play).padStart(2,'0'), players:run.players, holes:18, course, capturedAt:'2026-11-'+String(run.day).padStart(2,'0')+'T'+time+'+01:00', selectedTime, options:options.map(([teeTime,places,enabled = true]) => ({time:teeTime, places, enabled}))};
-}
-const executionAvailability = {
-  'sample-104': [
-    makeSnapshot(runs[0], 'Rosa', '20:00:02.150', [['06:45',4],['08:20',1],['08:30',4,false],['09:00',1],['10:15',4]]),
-    makeSnapshot(runs[0], 'Amarillo', '20:00:04.200', [['07:00',2],['08:25',4],['08:35',2],['09:00',4],['09:30',null],['10:15',4]], '08:25')
-  ],
-  'sample-102': [makeSnapshot(runs[1], 'Rosa', '20:00:03.100', [['09:15',4],['10:45',2],['11:00',4],['11:15',3],['12:45',4]], '11:00')],
-  'sample-101': [makeSnapshot(runs[2], 'Rosa', '20:00:02.500', [['07:30',4],['09:10',2],['09:20',4],['10:30',3],['10:50',4]], '09:10')],
-  'sample-100': [
-    makeSnapshot(runs[3], 'Rosa', '20:00:02.000', [['09:15',4],['09:45',1],['10:30',1],['12:45',2]]),
-    makeSnapshot(runs[3], 'Amarillo', '20:00:04.000', [['08:30',4],['11:00',1],['12:45',2]])
-  ],
-  'sample-099': [makeSnapshot(runs[4], 'Amarillo', '20:00:03.000', [['07:30',4],['08:00',2],['08:15',4],['09:45',4]], '08:00')],
-  'sample-098': [makeSnapshot(runs[5], 'Rosa', '20:00:02.100', [['09:15',4],['10:45',4],['11:00',4],['11:15',3],['12:45',4]], '11:00')],
-  'sample-097': [makeSnapshot(runs[6], 'Amarillo', '20:00:02.200', [['07:30',1],['08:05',2],['08:20',null],['09:00',4],['09:45',4]], '08:05')]
-};
+let reports = [];
+let loadError = false;
+try {
+  const response = await fetch('./data/executions.json', {cache:'no-store', signal:AbortSignal.timeout(10000)});
+  if (!response.ok) throw new Error('Results unavailable');
+  const archive = await response.json();
+  if (archive.schemaVersion !== 1 || !Array.isArray(archive.executions)) throw new Error('Invalid archive');
+  reports = archive.executions;
+  for (const report of reports) {
+    if (!report.executionId || !/^\d{4}-\d{2}-\d{2}$/.test(report.executionDate) || !/^\d{4}-\d{2}-\d{2}$/.test(report.playDate)
+        || !Array.isArray(report.participants) || !Array.isArray(report.availability)) throw new Error('Invalid execution');
+    if (report.schemaVersion !== 1 || !['Confirmed','Unavailable','Uncertain','Technical failure'].includes(report.outcome)
+        || (report.bookingDurationSeconds != null && (!Number.isFinite(report.bookingDurationSeconds) || report.bookingDurationSeconds < 0))) throw new Error('Invalid outcome or duration');
+    for (const key of ['startedAt','finishedAt','blockedAt','confirmedAt']) {
+      if (report[key] != null && !Number.isFinite(Date.parse(report[key]))) throw new Error('Invalid timestamp');
+    }
+    for (const snapshot of report.availability) {
+      if (!Array.isArray(snapshot.options) || !Number.isFinite(Date.parse(snapshot.capturedAt))) throw new Error('Invalid snapshot');
+    }
+  }
+} catch (error) { reports = []; loadError = true; }
+function formatDate(value) { return new Intl.DateTimeFormat('en-GB', {day:'2-digit',month:'short',year:'numeric',timeZone:'Europe/Madrid'}).format(new Date(value+'T12:00:00Z')); }
+function formatTime(value) { return new Intl.DateTimeFormat('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,timeZone:'Europe/Madrid',timeZoneName:'short'}).format(new Date(value)); }
+function courseName(value) { const color = String(value || '').match(/\b(ROSA|AMARILLO|VERDE)\b/i); return color ? color[1][0].toUpperCase()+color[1].slice(1).toLowerCase() : String(value || 'Not recorded'); }
+function bookingLabel(value) { const match = String(value || '').match(/^(.*?)\s*(\d{1,2}):(\d{2})$/); return match ? courseName(match[1])+' '+match[2].padStart(2,'0')+':'+match[3] : String(value || 'Not recorded'); }
+const runs = [...reports].sort((first,second) => (second.startedAt || second.executionDate).localeCompare(first.startedAt || first.executionDate)).map(report => ({
+  id:report.executionId, executionDate:report.executionDate, playDate:report.playDate, players:report.players,
+  requested:bookingLabel(report.requested), booked:report.booked ? bookingLabel(report.booked) : (report.outcome === 'Uncertain' ? 'Not confirmed' : 'Not submitted'),
+  outcome:report.outcome, block:report.blockedAt, confirmation:report.confirmedAt, duration:report.bookingDurationSeconds, note:report.summary, report
+}));
+const executionParticipants = Object.fromEntries(runs.map(run => [run.id,run.report.participants]));
+const executionAvailability = Object.fromEntries(runs.map(run => [run.id,run.report.availability.map(snapshot => ({...snapshot,course:courseName(snapshot.course)}))]));
 const availabilityArchive = Object.values(executionAvailability).flat();
-const scanMorning = {id:'sample-scan-201', day:14, play:15, players:2};
-const scanNoon = {id:'sample-scan-202', day:14, play:15, players:2};
-const scanFour = {id:'sample-scan-203', day:14, play:15, players:4};
-const scanEarlier = {id:'sample-scan-204', day:12, play:13, players:2};
-availabilityArchive.push(
-  makeSnapshot(scanMorning, 'Rosa', '08:00:01.000', [['06:45',4],['08:20',2],['08:30',2],['09:00',1],['09:30',4],['10:15',4]]),
-  makeSnapshot(scanMorning, 'Amarillo', '08:00:03.000', [['07:00',2],['08:25',2],['08:35',1],['09:00',4],['09:30',null],['10:15',4]]),
-  makeSnapshot(scanNoon, 'Rosa', '12:00:01.000', [['06:45',4],['08:20',1],['08:30',2],['09:00',2],['09:30',4],['10:15',4]]),
-  makeSnapshot(scanFour, 'Amarillo', '18:00:01.000', [['07:00',4],['08:35',4],['09:00',4],['10:15',4]]),
-  makeSnapshot(scanEarlier, 'Rosa', '08:00:01.000', [['09:15',4],['10:45',1],['11:15',2],['12:00',4],['12:45',4]]),
-  makeSnapshot(scanEarlier, 'Amarillo', '08:00:03.000', [['10:45',4],['11:00',2],['11:15',4]])
-);
 let selected = runs[0];
 let tab = 'availability';
 const escape = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
@@ -278,36 +261,36 @@ function outcomeBadge(outcome) {
 function visibleRuns() { const value = document.getElementById('filter').value || 'all'; return runs.filter(run => value === 'all' || run.outcome === value); }
 function renderTable() {
   const visible = visibleRuns();
-  document.getElementById('runs').innerHTML = visible.map(run => '<tr class="'+(run.id === selected.id?'selected':'')+'"><td><sp-action-button quiet class="run-button" data-run="'+escape(run.id)+'" aria-pressed="'+(run.id === selected.id)+'">'+run.day+' Nov 2026</sp-action-button><span class="sub">Play: '+run.play+' Nov</span></td><td>'+escape(run.requested)+'</td><td>'+escape(run.booked)+'</td><td class="status">'+outcomeBadge(run.outcome)+'</td><td>'+(run.confirmation || '<span class="muted">Not confirmed</span>')+'</td><td>'+(run.duration ? run.duration.toFixed(1) : '<span class="muted">Not applicable</span>')+'</td></tr>').join('');
-  document.getElementById('row-count').textContent = 'Source: fictional public result JSON | '+visible.length+' of 7 recorded executions shown | 06-13 Nov 2026.';
+  document.getElementById('runs').innerHTML = visible.length ? visible.map(run => '<tr class="'+(run.id === selected?.id?'selected':'')+'"><td><sp-action-button quiet class="run-button" data-run="'+escape(run.id)+'" aria-pressed="'+(run.id === selected?.id)+'">'+formatDate(run.executionDate)+'</sp-action-button><span class="sub">Play: '+formatDate(run.playDate)+'</span></td><td>'+escape(run.requested)+'</td><td>'+escape(run.booked)+'</td><td class="status">'+outcomeBadge(run.outcome)+'</td><td>'+(run.confirmation ? escape(formatTime(run.confirmation)) : '<span class="muted">Not confirmed</span>')+'</td><td>'+(run.duration != null ? run.duration.toFixed(1) : '<span class="muted">Not recorded</span>')+'</td></tr>').join('') : '<tr><td colspan="6" class="muted">'+(loadError ? 'Execution results could not be loaded.' : runs.length ? 'No executions match this outcome.' : 'No executions recorded yet.')+'</td></tr>';
+  document.getElementById('row-count').textContent = 'Source: saved execution JSON | '+visible.length+' of '+runs.length+' recorded executions shown';
   document.querySelectorAll('[data-run]').forEach(button => button.addEventListener('click', () => { selected = runs.find(run => run.id === button.dataset.run); render(); }));
 }
 function renderDetail() {
-  document.getElementById('detail-title').textContent = 'Execution details / '+selected.day+' Nov 2026';
+  document.getElementById('detail-title').textContent = 'Execution details / '+formatDate(selected.executionDate);
   document.getElementById('detail-status').innerHTML = outcomeBadge(selected.outcome);
   const participants = executionParticipants[selected.id] || [];
-  const facts = [['Execution ID',selected.id],['Play date',selected.play+' Nov 2026'],['Players',selected.players],['Player group',selected.outcome === 'Confirmed' ? 'Booking confirmed' : 'Requested / not confirmed']];
-  participants.forEach((participant,index) => facts.push([participant.role === 'booking-holder' ? 'Booking holder (you)' : 'Socio '+index, participant.name+' | Licencia: '+participant.licencia]));
+  const facts = [['Execution ID',selected.id],['Play date',formatDate(selected.playDate)],['Players',selected.players ?? 'Not recorded'],['Player group',selected.outcome === 'Confirmed' ? 'Booking confirmed' : 'Requested / not confirmed']];
+  participants.forEach((participant,index) => facts.push([participant.role === 'booking-holder' ? 'Booking holder (you)' : 'Socio '+index, (participant.name || 'Name not recorded')+' | Licencia: '+(participant.licencia || 'Not recorded')]));
   facts.push(['Requested',selected.requested],['Actual booked',selected.booked],['Time window','+/-90 minutes, inclusive']);
-  if (selected.block) facts.push(['Blocked at',selected.block+' CET']);
-  if (selected.confirmation) facts.push(['Confirmed at',selected.confirmation+' CET']);
+  if (selected.block) facts.push(['Blocked at',formatTime(selected.block)]);
+  if (selected.confirmation) facts.push(['Confirmed at',formatTime(selected.confirmation)]);
   if (selected.duration) facts.push(['Booking duration',selected.duration.toFixed(1)+' seconds (form start to confirmation)']);
   document.getElementById('facts').innerHTML = facts.map(([key,value]) => '<dt>'+escape(key)+'</dt><dd>'+escape(value)+'</dd>').join('');
   document.getElementById('note').textContent = selected.note;
   document.getElementById('detail-tabs').selected = tab;
   const panel = document.getElementById('summary-panel');
     const summary = [['Requested',selected.requested],['Result',selected.booked]];
-    if (selected.block) summary.push(['Blocked at',selected.block+' CET (click initiation)']);
-    if (selected.confirmation) summary.push(['Confirmed',selected.confirmation+' CET (success message detected)']);
+    if (selected.block) summary.push(['Blocked at',formatTime(selected.block)+' (click initiation)']);
+    if (selected.confirmation) summary.push(['Confirmed',formatTime(selected.confirmation)+' (success message detected)']);
     panel.innerHTML = '<div><ul class="events">'+summary.map(([label,value]) => '<li><span class="muted">'+escape(label)+'</span><span>'+escape(value)+'</span></li>').join('')+'</ul><p class="caption">Source: saved booking result, not a live action-by-action trace.</p></div>';
-    const date = '2026-11-'+String(selected.day).padStart(2,'0');
-    const result = {schemaVersion:1, executionId:selected.id, executionDate:date, playDate:'2026-11-'+String(selected.play).padStart(2,'0'), players:selected.players, participants:executionParticipants[selected.id] || [], requested:selected.requested, outcome:selected.outcome, booked:selected.outcome === 'Confirmed' ? selected.booked : null, blockedAt:selected.block ? date+'T'+selected.block+'+01:00' : null, confirmedAt:selected.confirmation ? date+'T'+selected.confirmation+'+01:00' : null, bookingDurationSeconds:selected.duration || null, summary:selected.note, availability:executionAvailability[selected.id] || []};
-    document.getElementById('json-panel').innerHTML = '<div><pre>'+escape(JSON.stringify(result,null,2))+'</pre><p class="caption">Fictional player identities and licencias. No real personal data, credentials, screenshots or raw logs.</p></div>';
+    document.getElementById('json-panel').innerHTML = '<div><pre>'+escape(JSON.stringify(selected.report,null,2))+'</pre><p class="caption">Saved public report. Missing identities were not observed; no credentials, screenshots or raw logs.</p></div>';
   renderExecutionAvailability();
 }
-function captureLabel(snapshot) { return snapshot.capturedAt.slice(8,10)+' Nov '+snapshot.capturedAt.slice(11,23)+' CET'; }
+function captureLabel(snapshot) { return formatDate(snapshot.capturedAt.slice(0,10))+' '+formatTime(snapshot.capturedAt); }
 function eligibility(option) {
-  const [hours,minutes] = selected.requested.match(/(\d{2}):(\d{2})$/).slice(1).map(Number);
+  const requestedTime = selected.requested.match(/(\d{2}):(\d{2})$/);
+  if (!requestedTime || !selected.players) return ['neutral','Eligibility not recorded'];
+  const [hours,minutes] = requestedTime.slice(1).map(Number);
   const [teeHours,teeMinutes] = option.time.split(':').map(Number);
   if (!option.enabled) return ['neutral','Disabled option'];
   if (Math.abs(teeHours * 60 + teeMinutes - hours * 60 - minutes) > 90) return ['neutral','Outside time window'];
@@ -317,11 +300,12 @@ function eligibility(option) {
 }
 function renderExecutionAvailability() {
   const snapshots = executionAvailability[selected.id] || [];
-  const metadata = ['Rosa','Amarillo'].map(course => {
+  const courses = selected.requested.startsWith('Verde ') ? ['Verde'] : ['Rosa','Amarillo'];
+  const metadata = courses.map(course => {
     const snapshot = snapshots.find(item => item.course === course);
     return '<div><strong>'+course+'</strong><span class="muted">'+(snapshot ? 'Captured '+escape(captureLabel(snapshot)) : 'Not checked')+'</span></div>';
   }).join('');
-  const rows = ['Rosa','Amarillo'].map(course => {
+  const rows = courses.map(course => {
     const snapshot = snapshots.find(item => item.course === course);
     if (!snapshot) return '<tr><td>'+course+'</td><td colspan="4" class="muted">Not checked during this execution</td></tr>';
     if (!snapshot.options.length) return '<tr><td>'+course+'</td><td colspan="4" class="muted">No times offered in this snapshot</td></tr>';
@@ -332,7 +316,7 @@ function renderExecutionAvailability() {
       return '<tr'+(chosen ? ' class="selected"' : '')+'><td>'+course+'</td><td><strong>'+option.time+'</strong></td><td>'+(option.places === null ? 'Not stated' : option.places)+'</td><td><sp-status-light variant="'+variant+'" size="s">'+label+'</sp-status-light></td><td>'+selection+'</td></tr>';
     }).join('');
   }).join('');
-  document.getElementById('execution-availability').innerHTML = '<div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+selected.play+' Nov 2026 | '+selected.players+' players | 18 holes | Requested: '+escape(selected.requested)+' | +/-90 minutes</p><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  document.getElementById('execution-availability').innerHTML = '<div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+formatDate(selected.playDate)+' | '+(selected.players ?? 'Unknown')+' players | 18 holes | Requested: '+escape(selected.requested)+' | +/-90 minutes</p><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
 function matrixCell(snapshot, previousSnapshot, time) {
   if (!snapshot) return '<td class="muted">Not checked</td>';
@@ -351,27 +335,56 @@ function matrixCell(snapshot, previousSnapshot, time) {
   return '<td'+(chosen ? ' class="cell-selected"' : '')+' title="'+title+'">'+(option.places === null ? '<span>Available</span><span class="sub">Places not stated</span>' : '<span class="cell-count">'+option.places+'</span><span class="muted"> '+(option.places === 1 ? 'place' : 'places')+'</span>')+change+(chosen ? '<span class="sub">Selected</span>' : '')+'</td>';
 }
 function renderAvailabilityHistory() {
-  const play = document.getElementById('availability-date').value || '15';
+  const play = document.getElementById('availability-date').value;
   const course = document.getElementById('availability-course').value || 'all';
   const players = Number(document.getElementById('availability-players').value || '2');
-  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === '2026-11-'+play && snapshot.players === players);
+  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === play && snapshot.players === players && snapshot.holes === 18);
   const groups = [...new Set(snapshots.map(snapshot => snapshot.executionId))].map(id => ({id, snapshots:snapshots.filter(snapshot => snapshot.executionId === id)})).sort((first,second) => first.snapshots[0].capturedAt.localeCompare(second.snapshots[0].capturedAt));
-  document.getElementById('availability-context').textContent = 'Play: '+play+' Nov 2026 | '+players+' players | '+groups.length+' executions | Values: offered places, including slots outside the booking window';
+  document.getElementById('availability-context').textContent = play ? 'Play: '+formatDate(play)+' | '+players+' players | '+groups.length+' executions | Offered places, including slots outside the booking window' : 'No availability snapshots recorded.';
   const container = document.getElementById('availability-matrix');
   if (!groups.length) { container.innerHTML = '<p class="availability-empty">No snapshots for this play date and player count.</p>'; return; }
   const headings = groups.map(group => '<th scope="col">'+escape(captureLabel(group.snapshots[0]))+'<span class="sub">'+escape(group.id)+'</span></th>').join('');
-  const rows = (course === 'all' ? ['Rosa','Amarillo'] : [course]).map(courseName => {
+  const rows = (course === 'all' ? [...new Set(snapshots.map(snapshot => snapshot.course))] : [course]).map(courseName => {
     const times = [...new Set(snapshots.filter(snapshot => snapshot.course === courseName).flatMap(snapshot => snapshot.options.map(option => option.time)))].sort();
     if (!times.length) return '<tr><td>'+courseName+'</td>'+groups.map(group => matrixCell(group.snapshots.find(snapshot => snapshot.course === courseName), null, '')).join('')+'</tr>';
     return times.map((time,index) => '<tr'+(index === 0 ? ' class="course-divider"' : '')+'><td><strong>'+courseName+'</strong><span class="sub">'+time+'</span></td>'+groups.map((group,column) => matrixCell(group.snapshots.find(snapshot => snapshot.course === courseName), groups[column-1]?.snapshots.find(snapshot => snapshot.course === courseName), time)).join('')+'</tr>').join('');
   }).join('');
   container.innerHTML = '<table class="availability-matrix"><thead><tr><th scope="col">Course / Tee time</th>'+headings+'</tr></thead><tbody>'+rows+'</tbody></table>';
 }
-function render() { renderTable(); renderDetail(); }
+function render() { renderTable(); document.querySelector('.detail').hidden = !selected; if (selected) renderDetail(); }
 document.getElementById('filter').addEventListener('change', () => { selected = visibleRuns()[0]; render(); });
-document.getElementById('detail-tabs').addEventListener('change', event => { tab = event.currentTarget.selected; renderDetail(); });
-document.getElementById('availability-date').innerHTML = [...new Set(availabilityArchive.map(snapshot => snapshot.playDate.slice(8)))].sort().reverse().map(day => '<sp-menu-item value="'+day+'">'+Number(day)+' Nov 2026</sp-menu-item>').join('');
+document.getElementById('detail-tabs').addEventListener('change', event => { tab = event.currentTarget.selected; if (selected) renderDetail(); });
+const dates = [...new Set(availabilityArchive.map(snapshot => snapshot.playDate))].sort().reverse();
+document.getElementById('availability-date').innerHTML = dates.map(date => '<sp-menu-item value="'+date+'">'+formatDate(date)+'</sp-menu-item>').join('');
+document.getElementById('availability-date').value = dates[0] || '';
+document.getElementById('availability-date').disabled = !dates.length;
+const playerCounts = [...new Set(availabilityArchive.map(snapshot => snapshot.players))].sort((first,second) => first-second);
+document.getElementById('availability-players').innerHTML = playerCounts.map(count => '<sp-menu-item value="'+count+'">'+count+' players</sp-menu-item>').join('');
+document.getElementById('availability-players').value = String(playerCounts[0] || 2);
+document.getElementById('availability-players').disabled = !playerCounts.length;
 ['availability-date','availability-course','availability-players'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
+function renderOverview() {
+  const counts = ['Confirmed','Unavailable','Technical failure','Uncertain'].map(outcome => runs.filter(run => run.outcome === outcome).length);
+  const durations = runs.filter(run => run.outcome === 'Confirmed' && typeof run.duration === 'number').map(run => run.duration).sort((first,second) => first-second);
+  const middle = Math.floor(durations.length/2);
+  const median = durations.length ? (durations.length%2 ? durations[middle] : (durations[middle-1]+durations[middle])/2) : null;
+  const statistics = [[runs.length,'Results saved by the booking app'],[counts[0]+' / '+runs.length,runs.length ? (counts[0]/runs.length*100).toFixed(1)+'% of recorded executions' : 'No recorded executions'],[counts[1]+counts[2],counts[1]+' unavailable | '+counts[2]+' technical failures'],[median === null ? '--' : median.toFixed(1)+' s',durations.length+' recorded durations | form start to confirmation']];
+  document.querySelectorAll('.stat').forEach((stat,index) => { stat.querySelector('.value').textContent = statistics[index][0]; stat.querySelector('.sub').textContent = statistics[index][1]; });
+  document.querySelector('.summary').setAttribute('aria-label','Outcome totals for '+runs.length+' saved executions');
+  const distribution = document.querySelector('.distribution');
+  distribution.setAttribute('aria-label',counts.map((count,index) => ['Confirmed','Unavailable','Technical failure','Uncertain'][index]+': '+count).join(', '));
+  distribution.querySelectorAll('.track').forEach((track,index) => { track.querySelector('.bar').style.width = (counts[index]/Math.max(1,...counts)*100)+'%'; track.nextElementSibling.textContent = counts[index]; });
+  const maximumCount = Math.max(1,...counts);
+  document.querySelector('.axis').innerHTML = '<span>0</span><span>'+maximumCount+' '+(maximumCount === 1 ? 'execution' : 'executions')+'</span>';
+  document.querySelector('.top-grid .caption').textContent = 'Source: saved execution JSON | One result per execution';
+  document.getElementById('execution-range').textContent = runs.length ? formatDate(runs[runs.length-1].executionDate)+' - '+formatDate(runs[0].executionDate)+' | Europe/Madrid' : 'Saved executions | Europe/Madrid';
+  const latest = runs.find(run => run.outcome === 'Confirmed');
+  document.querySelector('.upcoming').innerHTML = '<h2>Latest confirmed booking</h2>'+(latest ? '<dl>'+[['Execution',formatDate(latest.executionDate)],['Play date',formatDate(latest.playDate)],['Requested',latest.requested],['Booked',latest.booked],['Players',latest.players ?? 'Not recorded'],['Confirmed at',latest.confirmation ? formatTime(latest.confirmation) : 'Not recorded']].map(([key,value]) => '<dt>'+key+'</dt><dd>'+escape(value)+'</dd>').join('')+'</dl>' : '<p class="muted">No confirmed bookings recorded.</p>');
+  const notice = document.querySelector('.notice');
+  notice.hidden = !loadError && counts[3] === 0;
+  notice.textContent = loadError ? 'Execution results could not be loaded. Reload to try again.' : counts[3]+' executions need verification. Check TeeOne before retrying.';
+}
+renderOverview();
 render();
 renderAvailabilityHistory();
 </script>
