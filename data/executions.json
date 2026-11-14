@@ -1,4 +1,131 @@
 {
   "schemaVersion": 1,
-  "executions": []
+  "executions": [
+    {
+      "schemaVersion": 1,
+      "bookingDurationSeconds": null,
+      "outcome": "Unavailable",
+      "summary": "No eligible tee time on the checked courses. Reservation not submitted.",
+      "requested": "TEE 1 ROSA 8:00",
+      "blockedAt": null,
+      "playDate": "2026-11-15",
+      "confirmedAt": null,
+      "startedAt": "2026-11-14T18:39:54.21919335+01:00",
+      "booked": null,
+      "availability": [
+        {
+          "executionId": "43622215501-1",
+          "playDate": "2026-11-15",
+          "course": "TEE 1 ROSA",
+          "capturedAt": "2026-11-14T18:40:20.938485472+01:00",
+          "players": 3,
+          "holes": 18,
+          "selectedTime": null,
+          "options": []
+        },
+        {
+          "executionId": "43622215501-1",
+          "playDate": "2026-11-15",
+          "course": "TEE 1 AMARILLO",
+          "capturedAt": "2026-11-14T18:40:22.5657052+01:00",
+          "players": 3,
+          "holes": 18,
+          "selectedTime": null,
+          "options": [
+            {
+              "time": "15:25",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:55",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:05",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:15",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:25",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:35",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:45",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:55",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:05",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:15",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:25",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:35",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:45",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:55",
+              "places": 4,
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "executionDate": "2026-11-14",
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        },
+        {
+          "role": "socio",
+          "name": null,
+          "licencia": "CB05084626"
+        },
+        {
+          "role": "socio",
+          "name": null,
+          "licencia": "CB00801591"
+        }
+      ],
+      "players": 3,
+      "executionId": "43622215501-1",
+      "finishedAt": "2026-11-14T18:40:22.938974793+01:00"
+    }
+  ]
 }
