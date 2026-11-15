@@ -2,10 +2,6 @@
   "schemaVersion": 1,
   "executions": [
     {
-      "bookingDurationSeconds": null,
-      "outcome": "Technical failure",
-      "confirmedAt": null,
-      "schemaVersion": 1,
       "startedAt": "2026-11-14T19:36:11.384979798+01:00",
       "participants": [
         {
@@ -14,16 +10,301 @@
           "licencia": null
         }
       ],
+      "outcome": "Technical failure",
+      "executionId": "43624186514-1",
       "requested": null,
+      "executionDate": "2026-11-14",
+      "availability": [],
+      "bookingDurationSeconds": null,
+      "schemaVersion": 1,
+      "blockedAt": null,
+      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
+      "players": null,
+      "playDate": "2026-11-16",
       "summary": "Booking stopped before reservation submission. Check the workflow logs.",
       "booked": null,
-      "players": null,
-      "executionDate": "2026-11-14",
-      "blockedAt": null,
-      "playDate": "2026-11-16",
-      "availability": [],
-      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
-      "executionId": "43624186514-1"
+      "confirmedAt": null
+    },
+    {
+      "startedAt": "2026-11-15T19:36:11.795382345+01:00",
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        },
+        {
+          "role": "socio",
+          "name": "PISANDELLI, JUAN CRUZ",
+          "licencia": "CB05084626"
+        }
+      ],
+      "outcome": "Confirmed",
+      "executionId": "43744285553-1",
+      "requested": "TEE 1 ROSA 9:10",
+      "executionDate": "2026-11-15",
+      "availability": [
+        {
+          "executionId": "43744285553-1",
+          "playDate": "2026-11-17",
+          "course": "TEE 1 ROSA",
+          "capturedAt": "2026-11-15T20:00:03.612915155+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": "09:10",
+          "options": [
+            {
+              "time": "08:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "08:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "10:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "10:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "10:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "10:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:00",
+              "places": 4,
+              "enabled": true
+            }
+          ]
+        }
+      ],
+      "bookingDurationSeconds": 11.363,
+      "schemaVersion": 1,
+      "blockedAt": "2026-11-15T20:00:05.079382303+01:00",
+      "finishedAt": "2026-11-15T20:00:14.021183321+01:00",
+      "players": 2,
+      "playDate": "2026-11-17",
+      "summary": "Reservation success message observed.",
+      "booked": "TEE 1 ROSA 09:10",
+      "confirmedAt": "2026-11-15T20:00:12.36313468+01:00"
     }
   ]
 }
