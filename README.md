@@ -36,6 +36,19 @@ The booking repository's workflow backs up each report, then publishes an allowl
 
 The archive preserves one entry per execution ID. Availability history filters by full play date and course, showing all recorded player counts for 18-hole snapshots. Each execution column labels its player count; change indicators only compare snapshots with matching player counts. Only observed courses have snapshots. New availability-only schedules are not part of this integration.
 
+When a valid Google Sheet has no row for the target play date, the existing run
+inspects Rosa, Amarillo, and Verde for **2 players, 18 holes**. A complete
+inspection appears as **Informational**, with all offered times, no requested-time
+window, participants, booked slot, or reservation attempt. These runs are shown
+separately in the outcome filter/chart and excluded from the confirmed-booking
+rate denominator and the not-booked count. Availability history includes their
+snapshots alongside booking observations. An incomplete inspection is a
+technical failure and can retain partial snapshots.
+
+Availability-only runs send no email. Matching-row booking emails remain
+unchanged. Actual Sheets/configuration errors do not trigger this mode. This
+feature does not add a new schedule or continuously poll TeeOne.
+
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.
 
 ## Deleting an Execution
