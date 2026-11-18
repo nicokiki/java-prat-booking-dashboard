@@ -59,6 +59,42 @@ Availability-only runs send no email. Matching-row booking emails remain
 unchanged. Actual Sheets/configuration errors do not trigger this mode. This
 feature does not add a new schedule or continuously poll TeeOne.
 
+## Booking and Availability Analysis
+
+The confirmation rate is confirmed bookings divided by runs with a requested
+booking. Informational runs and failures before booking preferences were loaded
+are excluded from the denominator. The two timing KPIs use Confirmed cases only:
+form start to BLOQUEAR and form start to confirmation, with separate sample counts.
+New reports save `bookingFormStartedAt`; older form starts are reconstructed from
+`confirmedAt` minus `bookingDurationSeconds`. Workflow startup is not form startup.
+Missing or inconsistent timestamps are excluded, never replaced with zero.
+
+**Not bookable means not listed in the dropdown.** Listed options, including disabled
+ones or options with too few places, do not increase that metric. The grid retains
+those distinctions and marks the selected time. Each execution uses its actual
+snapshot; daily summaries use the earliest saved snapshot per course and play date
+so retries do not add sample days. Weekday groups use the play date, not the run
+date. Friday, combined weekends, Saturday and Sunday are shown with sample counts.
+
+The reference is the union of tee times actually recorded for the same course,
+player count and hole count, within the selected time window. It uses all saved
+dates, even when a narrower date range is selected. No ten-minute schedule or
+official club timetable is assumed. The reference grows when new times are observed,
+so historical counts can change as the archive grows. Times never observed cannot
+be detected as missing. No snapshot for a course is not an empty dropdown; it is
+excluded from counts. If no reference times are known, the median stays unknown.
+
+Aggregate analysis uses two players and 18 holes. Course, play-date range, tee-time
+window and Friday/weekend filters are responsive on mobile. Comparisons are of
+snapshots, not all-day availability; capture times can vary. CSV export includes
+capture timestamps, execution IDs, the reference method and reference time list so
+the exported calculation remains auditable. It contains no participant identities.
+Missing times cannot identify purchasers or establish non-member sales or allocation
+reasons. This dashboard documents observations rather than proving a cause.
+
+Run `node --test analysis.test.mjs` for calculation regressions. The dashboard's
+calculation-check workflow runs these tests on pushes and pull requests.
+
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.
 
 ## Deleting an Execution

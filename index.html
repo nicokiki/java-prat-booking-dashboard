@@ -167,22 +167,69 @@ pre { background: var(--bg); border-radius: 4px; }
 .snapshot-note { margin: 0 0 16px; font-size: 12px; color: var(--muted); }
 @media (max-width: 720px) { .toolbar .filter-control { width: 100%; justify-content: space-between; } sp-picker { width: 210px; } .detail { padding: 20px 12px; } }
 @media (max-width: 720px) { .availability-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .availability-control sp-picker { width: 100%; min-width: 0; } .availability-control { min-width: 0; } }
+.summary { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.summary .stat:first-child .value { color: var(--spectrum-green-900, #008a39); }
+.summary .stat:nth-child(n+2) .value { color: var(--fg); }
+.analysis { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.analysis h2 { margin-bottom: 5px; }
+.analysis-heading { display: flex; justify-content: space-between; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.analysis-heading p, .analysis-note { font-size: 12px; color: var(--muted); }
+.analysis-controls { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px 18px; }
+.analysis-controls label { display: grid; gap: 5px; font-size: 12px; color: var(--muted); min-width: 0; }
+.analysis-controls input, .analysis-controls select { width: 100%; min-width: 0; min-height: 38px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); color: var(--fg); font: inherit; }
+.analysis-kpis { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; padding: 20px 0 12px; }
+.analysis-kpis strong { display: block; font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.analysis-kpis span { font-size: 12px; color: var(--muted); }
+.analysis-note { margin: 10px 0 16px; line-height: 1.65; }
+.analysis-layout { display: grid; grid-template-columns: minmax(260px,.75fr) minmax(0,1.3fr); gap: 24px; margin-top: 20px; }
+.analysis-dates { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; align-self: start; }
+.analysis-date-head, .analysis-date { display: grid; grid-template-columns: 1.5fr .8fr .8fr; align-items: center; gap: 8px; padding: 11px 12px; text-align: left; }
+.analysis-date-head { font-size: 10px; color: var(--muted); background: var(--bg); }
+#analysis-days { max-height: 370px; overflow-y: auto; }
+.analysis-date { width: 100%; min-height: 44px; border: 0; border-top: 1px solid var(--line); background: var(--paper); font: inherit; font-size: 12px; }
+.analysis-date[aria-pressed="true"] { background: var(--surface); color: var(--accent); }
+.analysis-snapshot { min-width: 0; }
+.observation-grid { margin: 16px 0; }
+.observation-grid h3 { margin-bottom: 5px; }
+.observation-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 11px; margin: 12px 0; }
+.observation-legend span:before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 5px; border: 1px solid currentColor; border-radius: 2px; }
+.observation-legend .listed { color: #167548; }
+.observation-legend .limited { color: #8c5700; }
+.observation-legend .missing { color: #555d65; }
+.tee-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 6px; }
+.tee-slot { min-width: 0; height: 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid transparent; border-radius: 3px; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tee-slot small { font-size: 9px; font-weight: 400; }
+.tee-slot.listed { color: #167548; background: #e9f6ee; }
+.tee-slot.limited { color: #8c5700; background: #fff3d4; }
+.tee-slot.missing { color: #555d65; background: #eceff2; border: 1px dashed #a3aab3; }
+.tee-slot.is-selected { outline: 2px solid var(--accent); outline-offset: -2px; }
+.pattern-heading, .pattern-row { display: grid; grid-template-columns: 110px minmax(0,1fr) 80px; gap: 16px; align-items: center; }
+.pattern-heading { color: var(--muted); font-size: 11px; margin-top: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.pattern-row { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.pattern-measure { display: flex; gap: 12px; align-items: center; }
+.pattern-track { height: 10px; flex: 1; background: var(--line); border-radius: 2px; overflow: hidden; }
+.pattern-fill { height: 100%; background: var(--accent); }
+.pattern-measure strong { min-width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+.pattern-axis { display: flex; justify-content: space-between; margin: 8px 96px 0 126px; font-size: 10px; color: var(--muted); }
+.observation-details { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.observation-details summary { cursor: pointer; margin-bottom: 12px; }
+[hidden] { display: none !important; }
+@media (max-width: 720px) { .summary { grid-template-columns: repeat(2,minmax(0,1fr)); } .summary .stat:first-child { grid-column: 1/-1; border-bottom: 1px solid var(--line); padding-bottom: 16px; } .summary .stat:nth-child(2) { border-left: 0; padding-left: 0; } .summary .stat:nth-child(3) { border-left: 1px solid var(--line); padding-left: 16px; } .analysis-controls { grid-template-columns: repeat(2,minmax(0,1fr)); } .analysis-layout { grid-template-columns: 1fr; } #analysis-days { max-height: 190px; } .pattern-heading { display: none; } .pattern-row { grid-template-columns: 1fr auto; gap: 8px; } .pattern-measure { grid-column: 1/-1; grid-row: 2; } .pattern-row > span { grid-column: 2; grid-row: 1; color: var(--muted); } .pattern-axis { margin: 8px 0; } .tee-slot { font-size: 12px; } .analysis-controls input { padding: 7px 4px; } }
 </style>
 </head>
 <body>
 <sp-theme system="spectrum" color="light" scale="medium" lang="en">
-<div class="sitebar"><div class="sitebar-inner"><div class="brand"><img class="brand-mark" src="./rcgep-logo.png" width="120" height="95" alt="Real Club de Golf El Prat"><span class="brand-title">Tee Times - Booking - Dashboard</span></div><nav class="navigation" aria-label="Page sections"><a href="#overview">Overview</a><a href="#history-title">Executions</a><a href="#availability-title">Availability</a><a href="#detail-title">Details</a></nav></div></div>
+<div class="sitebar"><div class="sitebar-inner"><div class="brand"><img class="brand-mark" src="./rcgep-logo.png" width="120" height="95" alt="Real Club de Golf El Prat"><span class="brand-title">Tee Times - Booking - Dashboard</span></div><nav class="navigation" aria-label="Page sections"><a href="#overview">Overview</a><a href="#history-title">Executions</a><a href="#analysis-title">Availability</a><a href="#detail-title">Details</a></nav></div></div>
 <main id="overview">
   <header>
-    <div><div class="eyebrow muted">Real Club de Golf El Prat</div><h1>Booking results</h1><p class="muted" id="execution-range">Saved executions &middot; Europe/Madrid</p></div>
+    <div><div class="eyebrow muted">Real Club de Golf El Prat</div><h1>Booking &amp; availability</h1><p class="muted" id="execution-range">Saved executions &middot; Europe/Madrid</p></div>
     <div><sp-status-light variant="neutral" size="s">Public dashboard</sp-status-light><p class="caption">Source: saved execution JSON</p></div>
   </header>
   <section class="notice" hidden aria-label="Attention required"></section>
-  <section class="summary" aria-label="Saved execution outcomes">
-    <div class="stat"><span class="value">0</span><span class="stats-label">Recorded executions</span><span class="sub">Loading saved results</span></div>
+  <section class="summary" aria-label="Booking performance">
     <div class="stat"><span class="value">0 / 0</span><span class="stats-label">Confirmed bookings</span><span class="sub">No results loaded</span></div>
-    <div class="stat"><span class="value">0</span><span class="stats-label">Not booked</span><span class="sub">No results loaded</span></div>
-    <div class="stat"><span class="value">--</span><span class="stats-label">Median booking duration</span><span class="sub">No durations recorded</span></div>
+    <div class="stat"><span class="value">--</span><span class="stats-label">Median time to block</span><span class="sub">Confirmed cases only</span></div>
+    <div class="stat"><span class="value">--</span><span class="stats-label">Median time to confirm</span><span class="sub">Confirmed cases only</span></div>
   </section>
   <section class="top-grid">
     <div><h2>Recorded execution outcomes</h2><div class="distribution" role="img" aria-label="Execution outcomes not loaded">
@@ -192,6 +239,23 @@ pre { background: var(--bg); border-radius: 4px; }
       <span>Informational</span><div class="track"><div class="bar" style="width:0%"></div></div><span>0</span>
     </div><div class="axis"><span>0</span><span>1 execution</span></div><p class="caption">Source: saved execution JSON. One result per execution.</p></div>
     <div class="upcoming"><h2>Latest confirmed booking</h2><p class="muted">Loading saved results</p></div>
+  </section>
+  <section class="analysis" aria-labelledby="analysis-title">
+    <div class="analysis-heading"><div><h2 id="analysis-title">Member-view availability</h2><p>Not bookable = not listed in the dropdown. Listed times with limited capacity are not counted.</p></div><sp-action-button id="export-analysis" disabled>Download observations CSV</sp-action-button></div>
+    <div class="analysis-controls">
+      <label>From play date<input id="analysis-from" type="date"></label><label>Through play date<input id="analysis-through" type="date"></label>
+      <label>Course<select id="analysis-course"><option>Rosa</option><option>Amarillo</option><option>Verde</option></select></label>
+      <label>From tee time<input id="analysis-start" type="time" value="00:00"></label><label>Through tee time<input id="analysis-end" type="time" value="23:59"></label>
+      <label>Play days<select id="analysis-days-filter"><option value="all">All days</option><option value="friday">Fridays</option><option value="weekend">Weekends</option></select></label>
+    </div>
+    <div class="analysis-kpis"><div><strong id="missing-median">--</strong><span>Median not bookable / play date (not listed)</span></div><div><strong id="observed-dates">0</strong><span>Observed play dates &middot; 2 players &middot; 18 holes</span></div></div>
+    <p class="analysis-note" id="analysis-reference"></p>
+    <div class="analysis-layout" id="analysis-daily"><div class="analysis-dates"><div class="analysis-date-head"><span>Play date</span><span>Not bookable</span><span>Reference</span></div><div id="analysis-days"></div></div><div class="analysis-snapshot" id="analysis-snapshot"></div></div>
+    <p id="analysis-empty" class="analysis-note" hidden>No recorded observations match these filters. Missing observations are not counted as unavailable.</p>
+    <h3 style="margin-top:24px">Friday &amp; weekend patterns</h3>
+    <p class="analysis-note">Entire selected date range. One earliest saved snapshot per course and play date; retries do not add sample days. Capture times may vary.</p>
+    <div class="pattern-heading"><span>Play-day group</span><span>Median not bookable (not listed)</span><span>Play dates</span></div><div id="analysis-patterns"></div><div class="pattern-axis"><span>0 not listed</span><span id="analysis-axis-end"></span></div>
+    <p class="analysis-note">Reference: tee times ever observed for this course, party size and 18 holes, within the selected time window. It is not the club's official timetable; times never observed cannot be counted. Absent times do not identify purchasers or explain why a start is missing. This is snapshot evidence, not all-day availability.</p>
   </section>
   <section aria-labelledby="history-title">
     <div class="toolbar"><h2 id="history-title">Execution history</h2><div class="filter-control"><sp-field-label for="filter" side-aligned="start">Outcome</sp-field-label><sp-picker id="filter" value="all" label="Outcome"><sp-menu-item value="all">All outcomes</sp-menu-item><sp-menu-item value="Confirmed">Confirmed</sp-menu-item><sp-menu-item value="Unavailable">Unavailable</sp-menu-item><sp-menu-item value="Technical Failure">Technical Failure</sp-menu-item><sp-menu-item value="Informational">Informational</sp-menu-item></sp-picker></div></div>
@@ -225,6 +289,7 @@ pre { background: var(--bg); border-radius: 4px; }
 </sp-theme>
 <script type="module">
 import './spectrum.bundle.js';
+import {bookingMetrics, availabilityAnalysis, snapshotObservation, observationsCsv} from './analysis.mjs';
 const theme = document.querySelector('sp-theme');
 const mobileViewport = matchMedia('(max-width: 720px)');
 const updateScale = () => { theme.scale = mobileViewport.matches ? 'large' : 'medium'; };
@@ -243,7 +308,7 @@ try {
         || !Array.isArray(report.participants) || !Array.isArray(report.availability)) throw new Error('Invalid execution');
     if (report.schemaVersion !== 1 || !['Confirmed','Unavailable','Uncertain','Technical failure','Technical Failure','Informational'].includes(report.outcome)
         || (report.bookingDurationSeconds != null && (!Number.isFinite(report.bookingDurationSeconds) || report.bookingDurationSeconds < 0))) throw new Error('Invalid outcome or duration');
-    for (const key of ['startedAt','finishedAt','blockedAt','confirmedAt']) {
+    for (const key of ['startedAt','finishedAt','bookingFormStartedAt','blockedAt','confirmedAt']) {
       if (report[key] != null && !Number.isFinite(Date.parse(report[key]))) throw new Error('Invalid timestamp');
     }
     for (const snapshot of report.availability) {
@@ -265,6 +330,8 @@ const runs = [...reports].sort((first,second) => (second.startedAt || second.exe
 const executionParticipants = Object.fromEntries(runs.map(run => [run.id,run.report.participants]));
 const executionAvailability = Object.fromEntries(runs.map(run => [run.id,run.report.availability.map(snapshot => ({...snapshot,course:courseName(snapshot.course)}))]));
 const availabilityArchive = Object.values(executionAvailability).flat();
+let analysisSelectedDate;
+let currentAnalysis;
 let selected = runs[0];
 let tab = 'availability';
 let pendingDeletionId;
@@ -313,6 +380,7 @@ function renderDetail() {
   participants.forEach((participant,index) => facts.push([participant.role === 'booking-holder' ? 'Booking holder (you)' : 'Socio '+index, (participant.name || 'Name not recorded')+' | Licencia: '+(participant.licencia || 'Not recorded')]));
   facts.push(['Requested',selected.requested],['Actual booked',selected.booked]);
   if (!informational) facts.push(['Time window','+/-90 minutes, inclusive']);
+  if (selected.report.bookingFormStartedAt) facts.push(['Form started at',formatTime(selected.report.bookingFormStartedAt)]);
   if (selected.block) facts.push(['Blocked at',formatTime(selected.block)]);
   if (selected.confirmation) facts.push(['Confirmed at',formatTime(selected.confirmation)]);
   if (selected.duration) facts.push(['Booking duration',selected.duration.toFixed(1)+' seconds (form start to confirmation)']);
@@ -359,7 +427,45 @@ function renderExecutionAvailability() {
       return '<tr'+(chosen ? ' class="selected"' : '')+'><td>'+course+'</td><td><strong>'+option.time+'</strong></td><td>'+(option.places === null ? 'Not stated' : option.places)+'</td><td><sp-status-light variant="'+variant+'" size="s">'+label+'</sp-status-light></td><td>'+selection+'</td></tr>';
     }).join('');
   }).join('');
-  document.getElementById('execution-availability').innerHTML = '<div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+formatDate(selected.playDate)+' | '+(selected.players ?? 'Unknown')+' players | 18 holes | '+(selected.report.requested == null ? 'No booking requested | No reservation attempted' : 'Requested: '+escape(selected.requested)+' | +/-90 minutes')+'</p><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  const grids = snapshots.map(snapshot => {
+    const reference = availabilityAnalysis(availabilityArchive, {course:snapshot.course, players:snapshot.players, holes:snapshot.holes});
+    return observationGrid(snapshotObservation(snapshot, reference.times), reference.times);
+  }).join('');
+  document.getElementById('execution-availability').innerHTML = '<div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+formatDate(selected.playDate)+' | '+(selected.players ?? 'Unknown')+' players | 18 holes | '+(selected.report.requested == null ? 'No booking requested | No reservation attempted' : 'Requested: '+escape(selected.requested)+' | +/-90 minutes')+'</p>'+grids+'<details class="observation-details"><summary>Listed tee times and booking eligibility</summary><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></details></div>';
+}
+function observationGrid(row, times) {
+  const snapshot = row.snapshot;
+  const heading = '<h3>'+escape(courseName(snapshot.course))+' / '+formatDate(row.playDate)+'</h3><p class="snapshot-note">Captured '+escape(captureLabel(snapshot))+' | '+escape(snapshot.executionId)+' | '+escape(snapshot.players)+' players | '+escape(snapshot.holes)+' holes</p>';
+  if (!times.length) return '<div class="observation-grid">'+heading+'<p class="analysis-note">No observed reference times in this window. The missing-time count is unknown, not zero.</p></div>';
+  const cells = row.slots.map(slot => {
+    const label = slot.state === 'missing' ? 'Not listed' : !slot.option.enabled ? 'Disabled' : slot.option.places == null ? 'Listed' : slot.option.places+' '+(slot.option.places === 1 ? 'place' : 'places');
+    return '<div class="tee-slot '+slot.state+(snapshot.selectedTime === slot.time ? ' is-selected' : '')+'" title="'+escape(slot.time+': '+label+(snapshot.selectedTime === slot.time ? ' (selected)' : ''))+'"><span>'+slot.time+'</span><small>'+escape(label)+'</small></div>';
+  }).join('');
+  return '<div class="observation-grid">'+heading+'<p><strong>'+row.missing+' / '+times.length+'</strong> not bookable (not listed)</p><div class="observation-legend"><span class="listed">Listed</span><span class="limited">Listed, limited</span><span class="missing">Not bookable / not listed</span></div><div class="tee-grid" aria-label="Observed-reference tee-time grid">'+cells+'</div><p class="analysis-note">Missing times are relative to the observed reference, not a verified club timetable. Listed, limited times are excluded from the not-bookable count.</p></div>';
+}
+function renderAvailabilityAnalysis() {
+  const from = document.getElementById('analysis-from');
+  const through = document.getElementById('analysis-through');
+  const start = document.getElementById('analysis-start');
+  const end = document.getElementById('analysis-end');
+  if (from.value > through.value) through.value = from.value;
+  if (start.value > end.value) end.value = start.value;
+  currentAnalysis = availabilityAnalysis(availabilityArchive, {course:document.getElementById('analysis-course').value,
+    from:from.value, through:through.value || '9999-12-31', start:start.value || '00:00', end:end.value || '23:59', days:document.getElementById('analysis-days-filter').value});
+  const {rows, times, groups} = currentAnalysis;
+  if (!rows.some(row => row.playDate === analysisSelectedDate)) analysisSelectedDate = rows.at(-1)?.playDate;
+  document.getElementById('missing-median').textContent = currentAnalysis.median === null ? '--' : currentAnalysis.median+' / '+times.length;
+  document.getElementById('observed-dates').textContent = rows.length;
+  document.getElementById('analysis-reference').textContent = 'Observed reference: '+times.length+' distinct starts across '+currentAnalysis.referenceDates+' saved play dates for this course, 2 players and 18 holes. The reference uses all saved dates, not only the selected date range.';
+  document.getElementById('analysis-days').innerHTML = [...rows].reverse().map(row => '<button class="analysis-date" data-analysis-date="'+row.playDate+'" aria-pressed="'+(row.playDate === analysisSelectedDate)+'"><span>'+escape(new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(row.playDate+'T12:00:00Z')))+'</span><strong>'+(row.missing ?? '--')+'</strong><span>'+times.length+'</span></button>').join('');
+  document.querySelectorAll('[data-analysis-date]').forEach(button => button.addEventListener('click', () => { analysisSelectedDate = button.dataset.analysisDate; renderAvailabilityAnalysis(); }));
+  const selectedRow = rows.find(row => row.playDate === analysisSelectedDate);
+  document.getElementById('analysis-snapshot').innerHTML = selectedRow ? observationGrid(selectedRow, times) : '';
+  document.getElementById('analysis-daily').hidden = !selectedRow;
+  document.getElementById('analysis-empty').hidden = !!selectedRow;
+  document.getElementById('export-analysis').disabled = !rows.length || !times.length;
+  document.getElementById('analysis-patterns').innerHTML = groups.map(group => '<div class="pattern-row"><strong>'+group.label+'</strong><div class="pattern-measure"><div class="pattern-track" role="img" aria-label="'+group.label+': median '+(group.median ?? 'unknown')+' of '+times.length+' starts not listed"><div class="pattern-fill" style="width:'+(group.median === null ? 0 : group.median/Math.max(1,times.length)*100)+'%"></div></div><strong>'+(group.median ?? '--')+'</strong></div><span>'+group.count+' '+(group.count === 1 ? 'play date' : 'play dates')+'</span></div>').join('');
+  document.getElementById('analysis-axis-end').textContent = times.length+' reference starts';
 }
 function matrixCell(snapshot, previousSnapshot, time) {
   if (!snapshot) return '<td class="muted">Not checked</td>';
@@ -405,19 +511,18 @@ document.getElementById('availability-date').disabled = !dates.length;
 function renderOverview() {
   const outcomes = ['Confirmed','Unavailable','Technical Failure','Informational'];
   const counts = outcomes.map(outcome => runs.filter(run => run.outcome === outcome).length);
-  const bookingExecutions = runs.length - counts[3];
-  const durations = runs.filter(run => run.outcome === 'Confirmed' && typeof run.duration === 'number').map(run => run.duration).sort((first,second) => first-second);
-  const middle = Math.floor(durations.length/2);
-  const median = durations.length ? (durations.length%2 ? durations[middle] : (durations[middle-1]+durations[middle])/2) : null;
-  const statistics = [[runs.length,counts[3]+' informational | '+bookingExecutions+' booking executions'],[counts[0]+' / '+bookingExecutions,bookingExecutions ? (counts[0]/bookingExecutions*100).toFixed(1)+'% of booking executions' : 'No booking executions'],[counts[1]+counts[2],counts[1]+' unavailable | '+counts[2]+' technical failures'],[median === null ? '--' : median.toFixed(1)+' s',durations.length+' recorded durations | form start to confirmation']];
+  const metrics = bookingMetrics(reports);
+  const statistics = [[metrics.confirmed+' / '+metrics.attempts,(metrics.attempts ? (metrics.confirmed/metrics.attempts*100).toFixed(1)+'% of booking runs' : 'No booking runs')+' | '+counts[3]+' informational excluded'],
+    [metrics.blockMedian === null ? '--' : metrics.blockMedian.toFixed(1)+' s',metrics.blockSamples+' confirmed '+(metrics.blockSamples === 1 ? 'case' : 'cases')+' | form start to BLOQUEAR'],
+    [metrics.confirmationMedian === null ? '--' : metrics.confirmationMedian.toFixed(1)+' s',metrics.confirmationSamples+' confirmed '+(metrics.confirmationSamples === 1 ? 'case' : 'cases')+' | form start to confirmation']];
   document.querySelectorAll('.stat').forEach((stat,index) => { stat.querySelector('.value').textContent = statistics[index][0]; stat.querySelector('.sub').textContent = statistics[index][1]; });
-  document.querySelector('.summary').setAttribute('aria-label','Outcome totals for '+runs.length+' saved executions');
+  document.querySelector('.summary').setAttribute('aria-label','Confirmed booking rate and confirmed-only timing medians');
   const distribution = document.querySelector('.distribution');
   distribution.setAttribute('aria-label',counts.map((count,index) => outcomes[index]+': '+count).join(', '));
   distribution.querySelectorAll('.track').forEach((track,index) => { track.querySelector('.bar').style.width = (counts[index]/Math.max(1,...counts)*100)+'%'; track.nextElementSibling.textContent = counts[index]; });
   const maximumCount = Math.max(1,...counts);
   document.querySelector('.axis').innerHTML = '<span>0</span><span>'+maximumCount+' '+(maximumCount === 1 ? 'execution' : 'executions')+'</span>';
-  document.querySelector('.top-grid .caption').textContent = 'Source: saved execution JSON | One result per execution';
+  document.querySelector('.top-grid .caption').textContent = 'Source: saved execution JSON | '+runs.length+' saved executions | One result per execution';
   document.getElementById('execution-range').textContent = runs.length ? formatDate(runs[runs.length-1].executionDate)+' - '+formatDate(runs[0].executionDate)+' | Europe/Madrid' : 'Saved executions | Europe/Madrid';
   const latest = runs.find(run => run.outcome === 'Confirmed');
   document.querySelector('.upcoming').innerHTML = '<h2>Latest confirmed booking</h2>'+(latest ? '<dl>'+[['Execution',formatDate(latest.executionDate)],['Play date',formatDate(latest.playDate)],['Requested',latest.requested],['Booked',latest.booked],['Players',latest.players ?? 'Not recorded'],['Confirmed at',latest.confirmation ? formatTime(latest.confirmation) : 'Not recorded']].map(([key,value]) => '<dt>'+key+'</dt><dd>'+escape(value)+'</dd>').join('')+'</dl>' : '<p class="muted">No confirmed bookings recorded.</p>');
@@ -426,9 +531,23 @@ function renderOverview() {
   notice.hidden = !loadError && unconfirmed === 0;
   notice.textContent = loadError ? 'Execution results could not be loaded. Reload to try again.' : unconfirmed+' executions need verification. Check TeeOne before retrying.';
 }
+const analysisDates = [...new Set(availabilityArchive.filter(snapshot => snapshot.players === 2 && snapshot.holes === 18).map(snapshot => snapshot.playDate))].sort();
+document.getElementById('analysis-from').value = analysisDates[0] || '';
+document.getElementById('analysis-through').value = analysisDates.at(-1) || '';
+const referenceOptions = availabilityArchive.filter(snapshot => snapshot.players === 2 && snapshot.holes === 18).flatMap(snapshot => snapshot.options.map(option => option.time)).sort();
+document.getElementById('analysis-start').value = referenceOptions[0] || '00:00';
+document.getElementById('analysis-end').value = referenceOptions.at(-1) || '23:59';
+['analysis-from','analysis-through','analysis-course','analysis-start','analysis-end','analysis-days-filter'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityAnalysis));
+document.getElementById('export-analysis').addEventListener('click', () => {
+  if (!currentAnalysis?.rows.length || !currentAnalysis.times.length) return;
+  const url = URL.createObjectURL(new Blob([observationsCsv(currentAnalysis)], {type:'text/csv;charset=utf-8'}));
+  const link = document.createElement('a'); link.href = url; link.download = 'tee-time-observations.csv'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
 renderOverview();
 render();
 renderAvailabilityHistory();
+renderAvailabilityAnalysis();
 </script>
 </body>
 </html>
