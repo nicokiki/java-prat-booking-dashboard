@@ -72,7 +72,6 @@ tr.selected td:first-child { border-left: 2px solid var(--accent); padding-left:
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 4px; font-size: 10px; line-height: 1.4; font-weight: 500; color: var(--muted); background: #eef1ef; }
 .badge::before { content: ''; width: 4px; height: 4px; border-radius: 1px; background: currentColor; }
 .badge.confirmed { color: var(--accent); background: var(--success-bg); }
-.badge.uncertain { color: var(--warning); background: var(--warning-bg); }
 .badge.failed { color: var(--failure); background: var(--failure-bg); }
 .sub { font-size: 10px; color: var(--muted); display: block; margin-top: 4px; }
 .detail { margin-top: 26px; background: var(--paper); border-top: 2px solid var(--accent); padding: 24px; }
@@ -189,14 +188,13 @@ pre { background: var(--bg); border-radius: 4px; }
     <div><h2>Recorded execution outcomes</h2><div class="distribution" role="img" aria-label="Execution outcomes not loaded">
       <span>Confirmed</span><div class="track"><div class="bar" style="width:0%"></div></div><span>0</span>
       <span>Unavailable</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
-      <span>Technical failure</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
-      <span>Uncertain</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
+      <span>Technical Failure</span><div class="track"><div class="bar secondary" style="width:0%"></div></div><span>0</span>
       <span>Informational</span><div class="track"><div class="bar" style="width:0%"></div></div><span>0</span>
     </div><div class="axis"><span>0</span><span>1 execution</span></div><p class="caption">Source: saved execution JSON. One result per execution.</p></div>
     <div class="upcoming"><h2>Latest confirmed booking</h2><p class="muted">Loading saved results</p></div>
   </section>
   <section aria-labelledby="history-title">
-    <div class="toolbar"><h2 id="history-title">Execution history</h2><div class="filter-control"><sp-field-label for="filter" side-aligned="start">Outcome</sp-field-label><sp-picker id="filter" value="all" label="Outcome"><sp-menu-item value="all">All outcomes</sp-menu-item><sp-menu-item value="Confirmed">Confirmed</sp-menu-item><sp-menu-item value="Unavailable">Unavailable</sp-menu-item><sp-menu-item value="Technical failure">Technical failure</sp-menu-item><sp-menu-item value="Uncertain">Uncertain</sp-menu-item><sp-menu-item value="Informational">Informational</sp-menu-item></sp-picker></div></div>
+    <div class="toolbar"><h2 id="history-title">Execution history</h2><div class="filter-control"><sp-field-label for="filter" side-aligned="start">Outcome</sp-field-label><sp-picker id="filter" value="all" label="Outcome"><sp-menu-item value="all">All outcomes</sp-menu-item><sp-menu-item value="Confirmed">Confirmed</sp-menu-item><sp-menu-item value="Unavailable">Unavailable</sp-menu-item><sp-menu-item value="Technical Failure">Technical Failure</sp-menu-item><sp-menu-item value="Informational">Informational</sp-menu-item></sp-picker></div></div>
     <div class="table-wrap"><table><thead><tr><th>Execution / play date</th><th>Requested</th><th>Booked</th><th>Outcome</th><th>Confirmed at (Madrid)</th><th>Duration (s)</th></tr></thead><tbody id="runs"></tbody></table></div>
     <p class="caption" id="row-count">Loading saved execution JSON</p>
   </section>
@@ -243,7 +241,7 @@ try {
   for (const report of reports) {
     if (!report.executionId || !/^\d{4}-\d{2}-\d{2}$/.test(report.executionDate) || !/^\d{4}-\d{2}-\d{2}$/.test(report.playDate)
         || !Array.isArray(report.participants) || !Array.isArray(report.availability)) throw new Error('Invalid execution');
-    if (report.schemaVersion !== 1 || !['Confirmed','Unavailable','Uncertain','Technical failure','Informational'].includes(report.outcome)
+    if (report.schemaVersion !== 1 || !['Confirmed','Unavailable','Uncertain','Technical failure','Technical Failure','Informational'].includes(report.outcome)
         || (report.bookingDurationSeconds != null && (!Number.isFinite(report.bookingDurationSeconds) || report.bookingDurationSeconds < 0))) throw new Error('Invalid outcome or duration');
     for (const key of ['startedAt','finishedAt','blockedAt','confirmedAt']) {
       if (report[key] != null && !Number.isFinite(Date.parse(report[key]))) throw new Error('Invalid timestamp');
@@ -252,6 +250,7 @@ try {
       if (!Array.isArray(snapshot.options) || !Number.isFinite(Date.parse(snapshot.capturedAt))) throw new Error('Invalid snapshot');
     }
   }
+  reports = reports.map(report => ({...report, outcome:['Uncertain','Technical failure'].includes(report.outcome) ? 'Technical Failure' : report.outcome}));
 } catch (error) { reports = []; loadError = true; }
 function formatDate(value) { return new Intl.DateTimeFormat('en-GB', {day:'2-digit',month:'short',year:'numeric',timeZone:'Europe/Madrid'}).format(new Date(value+'T12:00:00Z')); }
 function formatTime(value) { return new Intl.DateTimeFormat('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,timeZone:'Europe/Madrid',timeZoneName:'short'}).format(new Date(value)); }
@@ -259,7 +258,8 @@ function courseName(value) { const color = String(value || '').match(/\b(ROSA|AM
 function bookingLabel(value) { const match = String(value || '').match(/^(.*?)\s*(\d{1,2}):(\d{2})$/); return match ? courseName(match[1])+' '+match[2].padStart(2,'0')+':'+match[3] : String(value || 'Not recorded'); }
 const runs = [...reports].sort((first,second) => (second.startedAt || second.executionDate).localeCompare(first.startedAt || first.executionDate)).map(report => ({
   id:report.executionId, executionDate:report.executionDate, playDate:report.playDate, players:report.players,
-  requested:report.outcome === 'Informational' ? 'Availability only' : bookingLabel(report.requested), booked:report.booked ? bookingLabel(report.booked) : (report.outcome === 'Informational' ? 'Not attempted' : report.outcome === 'Uncertain' ? 'Not confirmed' : 'Not submitted'),
+  requested:report.outcome === 'Informational' ? 'Availability only' : bookingLabel(report.requested), booked:report.booked ? bookingLabel(report.booked) : (report.outcome === 'Informational' ? 'Not attempted' : report.summary?.startsWith('Reservation submission attempted; confirmation not observed.') ? 'Not confirmed' : 'Not submitted'),
+  unconfirmed:report.summary?.startsWith('Reservation submission attempted; confirmation not observed.'),
   outcome:report.outcome, block:report.blockedAt, confirmation:report.confirmedAt, duration:report.bookingDurationSeconds, note:report.summary, report
 }));
 const executionParticipants = Object.fromEntries(runs.map(run => [run.id,run.report.participants]));
@@ -293,7 +293,7 @@ document.getElementById('copy-delete-id').addEventListener('click', async () => 
 document.getElementById('delete-workflow').addEventListener('click', () => deleteDialog.close());
 const escape = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 function outcomeBadge(outcome) {
-  const variant = {'Confirmed':'positive', 'Uncertain':'notice', 'Technical failure':'negative', 'Informational':'info'}[outcome] || 'neutral';
+  const variant = {'Confirmed':'positive', 'Technical Failure':'negative', 'Informational':'info'}[outcome] || 'neutral';
   return '<sp-status-light variant="'+variant+'" size="s">'+escape(outcome)+'</sp-status-light>';
 }
 function visibleRuns() { const value = document.getElementById('filter').value || 'all'; return runs.filter(run => value === 'all' || run.outcome === value); }
@@ -343,13 +343,14 @@ function eligibility(option) {
 function renderExecutionAvailability() {
   const snapshots = executionAvailability[selected.id] || [];
   const courses = selected.report.requested == null ? ['Rosa','Amarillo','Verde'] : selected.requested.startsWith('Verde ') ? ['Verde'] : ['Rosa','Amarillo'];
+  const missingCourse = course => course === 'Verde' && selected.outcome === 'Informational' ? 'Not offered for this date' : 'Not checked during this execution';
   const metadata = courses.map(course => {
     const snapshot = snapshots.find(item => item.course === course);
-    return '<div><strong>'+course+'</strong><span class="muted">'+(snapshot ? 'Captured '+escape(captureLabel(snapshot)) : 'Not checked')+'</span></div>';
+    return '<div><strong>'+course+'</strong><span class="muted">'+(snapshot ? 'Captured '+escape(captureLabel(snapshot)) : missingCourse(course))+'</span></div>';
   }).join('');
   const rows = courses.map(course => {
     const snapshot = snapshots.find(item => item.course === course);
-    if (!snapshot) return '<tr><td>'+course+'</td><td colspan="4" class="muted">Not checked during this execution</td></tr>';
+    if (!snapshot) return '<tr><td>'+course+'</td><td colspan="4" class="muted">'+missingCourse(course)+'</td></tr>';
     if (!snapshot.options.length) return '<tr><td>'+course+'</td><td colspan="4" class="muted">No times offered in this snapshot</td></tr>';
     return [...snapshot.options].sort((first,second) => first.time.localeCompare(second.time)).map(option => {
       const [variant,label] = eligibility(option);
@@ -402,13 +403,13 @@ document.getElementById('availability-date').value = dates[0] || '';
 document.getElementById('availability-date').disabled = !dates.length;
 ['availability-date','availability-course'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
 function renderOverview() {
-  const outcomes = ['Confirmed','Unavailable','Technical failure','Uncertain','Informational'];
+  const outcomes = ['Confirmed','Unavailable','Technical Failure','Informational'];
   const counts = outcomes.map(outcome => runs.filter(run => run.outcome === outcome).length);
-  const bookingExecutions = runs.length - counts[4];
+  const bookingExecutions = runs.length - counts[3];
   const durations = runs.filter(run => run.outcome === 'Confirmed' && typeof run.duration === 'number').map(run => run.duration).sort((first,second) => first-second);
   const middle = Math.floor(durations.length/2);
   const median = durations.length ? (durations.length%2 ? durations[middle] : (durations[middle-1]+durations[middle])/2) : null;
-  const statistics = [[runs.length,counts[4]+' informational | '+bookingExecutions+' booking executions'],[counts[0]+' / '+bookingExecutions,bookingExecutions ? (counts[0]/bookingExecutions*100).toFixed(1)+'% of booking executions' : 'No booking executions'],[counts[1]+counts[2],counts[1]+' unavailable | '+counts[2]+' technical failures'],[median === null ? '--' : median.toFixed(1)+' s',durations.length+' recorded durations | form start to confirmation']];
+  const statistics = [[runs.length,counts[3]+' informational | '+bookingExecutions+' booking executions'],[counts[0]+' / '+bookingExecutions,bookingExecutions ? (counts[0]/bookingExecutions*100).toFixed(1)+'% of booking executions' : 'No booking executions'],[counts[1]+counts[2],counts[1]+' unavailable | '+counts[2]+' technical failures'],[median === null ? '--' : median.toFixed(1)+' s',durations.length+' recorded durations | form start to confirmation']];
   document.querySelectorAll('.stat').forEach((stat,index) => { stat.querySelector('.value').textContent = statistics[index][0]; stat.querySelector('.sub').textContent = statistics[index][1]; });
   document.querySelector('.summary').setAttribute('aria-label','Outcome totals for '+runs.length+' saved executions');
   const distribution = document.querySelector('.distribution');
@@ -421,8 +422,9 @@ function renderOverview() {
   const latest = runs.find(run => run.outcome === 'Confirmed');
   document.querySelector('.upcoming').innerHTML = '<h2>Latest confirmed booking</h2>'+(latest ? '<dl>'+[['Execution',formatDate(latest.executionDate)],['Play date',formatDate(latest.playDate)],['Requested',latest.requested],['Booked',latest.booked],['Players',latest.players ?? 'Not recorded'],['Confirmed at',latest.confirmation ? formatTime(latest.confirmation) : 'Not recorded']].map(([key,value]) => '<dt>'+key+'</dt><dd>'+escape(value)+'</dd>').join('')+'</dl>' : '<p class="muted">No confirmed bookings recorded.</p>');
   const notice = document.querySelector('.notice');
-  notice.hidden = !loadError && counts[3] === 0;
-  notice.textContent = loadError ? 'Execution results could not be loaded. Reload to try again.' : counts[3]+' executions need verification. Check TeeOne before retrying.';
+  const unconfirmed = runs.filter(run => run.unconfirmed).length;
+  notice.hidden = !loadError && unconfirmed === 0;
+  notice.textContent = loadError ? 'Execution results could not be loaded. Reload to try again.' : unconfirmed+' executions need verification. Check TeeOne before retrying.';
 }
 renderOverview();
 render();

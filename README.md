@@ -8,7 +8,13 @@ Site: https://nicokiki.github.io/java-prat-booking-dashboard/
 
 The dashboard reads saved booking reports from `data/executions.json`. An empty archive shows no recorded executions, not fictional bookings. The site cannot create or retry reservations.
 
-Names and licencias are public when recorded. Missing identities are displayed as unrecorded. Uncertain executions never claim a confirmed booking.
+Names and licencias are public when recorded. Missing identities are displayed as unrecorded. Unconfirmed submissions never claim a confirmed booking.
+
+Displayed outcomes are **Confirmed**, **Unavailable**, **Technical Failure**, and
+**Informational**. Historical `Uncertain` results and new unconfirmed submissions
+appear as Technical Failure, retaining the warning to check TeeOne before retrying.
+The saved source archive can still contain the historical label; publication
+normalizes it on the next archive update. Existing records are not deleted.
 
 ### Rollout Status (2026-11-14)
 
@@ -37,13 +43,17 @@ The booking repository's workflow backs up each report, then publishes an allowl
 The archive preserves one entry per execution ID. Availability history filters by full play date and course, showing all recorded player counts for 18-hole snapshots. Each execution column labels its player count; change indicators only compare snapshots with matching player counts. Only observed courses have snapshots. New availability-only schedules are not part of this integration.
 
 When a valid Google Sheet has no row for the target play date, the existing run
-inspects Rosa, Amarillo, and Verde for **2 players, 18 holes**. A complete
+inspects Rosa and Amarillo, plus Verde when offered in the course dropdown, for
+**2 players, 18 holes**. Missing Verde is normal and does not make the run fail.
+It is shown as **Not offered for this date**, without a fabricated empty snapshot.
+A complete
 inspection appears as **Informational**, with all offered times, no requested-time
 window, participants, booked slot, or reservation attempt. These runs are shown
 separately in the outcome filter/chart and excluded from the confirmed-booking
 rate denominator and the not-booked count. Availability history includes their
 snapshots alongside booking observations. An incomplete inspection is a
-technical failure and can retain partial snapshots.
+technical failure and can retain partial snapshots, including when Verde was
+offered but could not be inspected.
 
 Availability-only runs send no email. Matching-row booking emails remain
 unchanged. Actual Sheets/configuration errors do not trigger this mode. This
