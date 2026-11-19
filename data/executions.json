@@ -2,10 +2,13 @@
   "schemaVersion": 1,
   "executions": [
     {
-      "availability": [],
-      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
-      "requested": null,
+      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
+      "players": null,
+      "startedAt": "2026-11-14T19:36:11.384979798+01:00",
       "executionId": "43624186514-1",
+      "executionDate": "2026-11-14",
+      "playDate": "2026-11-16",
+      "booked": null,
       "participants": [
         {
           "role": "booking-holder",
@@ -13,20 +16,36 @@
           "licencia": null
         }
       ],
-      "outcome": "Technical failure",
-      "confirmedAt": null,
+      "availability": [],
       "blockedAt": null,
-      "bookingDurationSeconds": null,
-      "executionDate": "2026-11-14",
-      "players": null,
+      "requested": null,
+      "bookingFormStartedAt": null,
+      "confirmedAt": null,
       "schemaVersion": 1,
-      "startedAt": "2026-11-14T19:36:11.384979798+01:00",
-      "playDate": "2026-11-16",
-      "booked": null,
-      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
-      "bookingFormStartedAt": null
+      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
+      "bookingDurationSeconds": null,
+      "outcome": "Technical failure"
     },
     {
+      "summary": "Reservation success message observed.",
+      "players": 2,
+      "startedAt": "2026-11-15T19:36:11.795382345+01:00",
+      "executionId": "43744285553-1",
+      "executionDate": "2026-11-15",
+      "playDate": "2026-11-17",
+      "booked": "TEE 1 ROSA 09:10",
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        },
+        {
+          "role": "socio",
+          "name": "PISANDELLI, JUAN CRUZ",
+          "licencia": "CB05084626"
+        }
+      ],
       "availability": [
         {
           "executionId": "43744285553-1",
@@ -280,35 +299,24 @@
           ]
         }
       ],
-      "finishedAt": "2026-11-15T20:00:14.021183321+01:00",
-      "requested": "TEE 1 ROSA 9:10",
-      "executionId": "43744285553-1",
-      "participants": [
-        {
-          "role": "booking-holder",
-          "name": null,
-          "licencia": null
-        },
-        {
-          "role": "socio",
-          "name": "PISANDELLI, JUAN CRUZ",
-          "licencia": "CB05084626"
-        }
-      ],
-      "outcome": "Confirmed",
-      "confirmedAt": "2026-11-15T20:00:12.36313468+01:00",
       "blockedAt": "2026-11-15T20:00:05.079382303+01:00",
-      "bookingDurationSeconds": 11.363,
-      "executionDate": "2026-11-15",
-      "players": 2,
+      "requested": "TEE 1 ROSA 9:10",
+      "bookingFormStartedAt": null,
+      "confirmedAt": "2026-11-15T20:00:12.36313468+01:00",
       "schemaVersion": 1,
-      "startedAt": "2026-11-15T19:36:11.795382345+01:00",
-      "playDate": "2026-11-17",
-      "booked": "TEE 1 ROSA 09:10",
-      "summary": "Reservation success message observed.",
-      "bookingFormStartedAt": null
+      "finishedAt": "2026-11-15T20:00:14.021183321+01:00",
+      "bookingDurationSeconds": 11.363,
+      "outcome": "Confirmed"
     },
     {
+      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
+      "players": 2,
+      "startedAt": "2026-11-16T19:36:27.099876729+01:00",
+      "executionId": "43924327800-1",
+      "executionDate": "2026-11-16",
+      "playDate": "2026-11-18",
+      "booked": null,
+      "participants": [],
       "availability": [
         {
           "executionId": "43924327800-1",
@@ -793,24 +801,24 @@
           ]
         }
       ],
-      "finishedAt": "2026-11-16T20:00:34.364253767+01:00",
-      "requested": null,
-      "executionId": "43924327800-1",
-      "participants": [],
-      "outcome": "Technical failure",
-      "confirmedAt": null,
       "blockedAt": null,
-      "bookingDurationSeconds": null,
-      "executionDate": "2026-11-16",
-      "players": 2,
+      "requested": null,
+      "bookingFormStartedAt": null,
+      "confirmedAt": null,
       "schemaVersion": 1,
-      "startedAt": "2026-11-16T19:36:27.099876729+01:00",
-      "playDate": "2026-11-18",
-      "booked": null,
-      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
-      "bookingFormStartedAt": null
+      "finishedAt": "2026-11-16T20:00:34.364253767+01:00",
+      "bookingDurationSeconds": null,
+      "outcome": "Technical failure"
     },
     {
+      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
+      "players": 2,
+      "startedAt": "2026-11-17T19:36:33.388873991+01:00",
+      "executionId": "44143212369-1",
+      "executionDate": "2026-11-17",
+      "playDate": "2026-11-19",
+      "booked": null,
+      "participants": [],
       "availability": [
         {
           "executionId": "44143212369-1",
@@ -1160,24 +1168,24 @@
           ]
         }
       ],
-      "finishedAt": "2026-11-17T20:00:09.882707543+01:00",
-      "requested": null,
-      "executionId": "44143212369-1",
-      "participants": [],
-      "outcome": "Informational",
-      "confirmedAt": null,
       "blockedAt": null,
-      "bookingDurationSeconds": null,
-      "executionDate": "2026-11-17",
-      "players": 2,
+      "requested": null,
+      "bookingFormStartedAt": null,
+      "confirmedAt": null,
       "schemaVersion": 1,
-      "startedAt": "2026-11-17T19:36:33.388873991+01:00",
-      "playDate": "2026-11-19",
-      "booked": null,
-      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
-      "bookingFormStartedAt": null
+      "finishedAt": "2026-11-17T20:00:09.882707543+01:00",
+      "bookingDurationSeconds": null,
+      "outcome": "Informational"
     },
     {
+      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
+      "players": 2,
+      "startedAt": "2026-11-18T19:36:31.200705014+01:00",
+      "executionId": "44364973294-1",
+      "executionDate": "2026-11-18",
+      "playDate": "2026-11-20",
+      "booked": null,
+      "participants": [],
       "availability": [
         {
           "executionId": "44364973294-1",
@@ -1587,22 +1595,65 @@
           "options": []
         }
       ],
-      "finishedAt": "2026-11-18T20:00:13.651982673+01:00",
-      "requested": null,
-      "executionId": "44364973294-1",
-      "participants": [],
-      "outcome": "Informational",
-      "confirmedAt": null,
       "blockedAt": null,
-      "bookingDurationSeconds": null,
-      "executionDate": "2026-11-18",
-      "players": 2,
+      "requested": null,
+      "bookingFormStartedAt": null,
+      "confirmedAt": null,
       "schemaVersion": 1,
-      "startedAt": "2026-11-18T19:36:31.200705014+01:00",
-      "playDate": "2026-11-20",
+      "finishedAt": "2026-11-18T20:00:13.651982673+01:00",
+      "bookingDurationSeconds": null,
+      "outcome": "Informational"
+    },
+    {
+      "summary": "No eligible tee time on the checked courses. Reservation not submitted.",
+      "players": 2,
+      "startedAt": "2026-11-19T19:36:37.00594154+01:00",
+      "executionId": "44583244751-1",
+      "executionDate": "2026-11-19",
+      "playDate": "2026-11-21",
       "booked": null,
-      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
-      "bookingFormStartedAt": null
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        },
+        {
+          "role": "socio",
+          "name": null,
+          "licencia": "CB05084626"
+        }
+      ],
+      "availability": [
+        {
+          "executionId": "44583244751-1",
+          "playDate": "2026-11-21",
+          "course": "TEE 1 ROSA",
+          "capturedAt": "2026-11-19T20:00:05.528694651+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": null,
+          "options": []
+        },
+        {
+          "executionId": "44583244751-1",
+          "playDate": "2026-11-21",
+          "course": "TEE 1 AMARILLO",
+          "capturedAt": "2026-11-19T20:00:14.289826496+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": null,
+          "options": []
+        }
+      ],
+      "blockedAt": null,
+      "requested": "TEE 1 ROSA 13:00",
+      "bookingFormStartedAt": "2026-11-19T20:00:01.000040768+01:00",
+      "confirmedAt": null,
+      "schemaVersion": 1,
+      "finishedAt": "2026-11-19T20:00:14.319212249+01:00",
+      "bookingDurationSeconds": null,
+      "outcome": "Unavailable"
     }
   ]
 }
