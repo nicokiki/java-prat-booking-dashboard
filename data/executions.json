@@ -1603,57 +1603,6 @@
       "finishedAt": "2026-11-18T20:00:13.651982673+01:00",
       "bookingDurationSeconds": null,
       "outcome": "Informational"
-    },
-    {
-      "summary": "No eligible tee time on the checked courses. Reservation not submitted.",
-      "players": 2,
-      "startedAt": "2026-11-19T19:36:37.00594154+01:00",
-      "executionId": "44583244751-1",
-      "executionDate": "2026-11-19",
-      "playDate": "2026-11-21",
-      "booked": null,
-      "participants": [
-        {
-          "role": "booking-holder",
-          "name": null,
-          "licencia": null
-        },
-        {
-          "role": "socio",
-          "name": null,
-          "licencia": "CB05084626"
-        }
-      ],
-      "availability": [
-        {
-          "executionId": "44583244751-1",
-          "playDate": "2026-11-21",
-          "course": "TEE 1 ROSA",
-          "capturedAt": "2026-11-19T20:00:05.528694651+01:00",
-          "players": 2,
-          "holes": 18,
-          "selectedTime": null,
-          "options": []
-        },
-        {
-          "executionId": "44583244751-1",
-          "playDate": "2026-11-21",
-          "course": "TEE 1 AMARILLO",
-          "capturedAt": "2026-11-19T20:00:14.289826496+01:00",
-          "players": 2,
-          "holes": 18,
-          "selectedTime": null,
-          "options": []
-        }
-      ],
-      "blockedAt": null,
-      "requested": "TEE 1 ROSA 13:00",
-      "bookingFormStartedAt": "2026-11-19T20:00:01.000040768+01:00",
-      "confirmedAt": null,
-      "schemaVersion": 1,
-      "finishedAt": "2026-11-19T20:00:14.319212249+01:00",
-      "bookingDurationSeconds": null,
-      "outcome": "Unavailable"
     }
   ]
 }
