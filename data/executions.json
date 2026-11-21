@@ -1606,56 +1606,6 @@
     },
     {
       "requested": null,
-      "startedAt": "2026-11-20T19:36:39.24630046+01:00",
-      "confirmedAt": null,
-      "booked": null,
-      "playDate": "2026-11-22",
-      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
-      "participants": [],
-      "players": 2,
-      "finishedAt": "2026-11-20T20:00:15.073592339+01:00",
-      "outcome": "Informational",
-      "availability": [
-        {
-          "executionId": "44788715368-1",
-          "playDate": "2026-11-22",
-          "course": "TEE 1 ROSA",
-          "capturedAt": "2026-11-20T20:00:05.737745364+01:00",
-          "players": 2,
-          "holes": 18,
-          "selectedTime": null,
-          "options": []
-        },
-        {
-          "executionId": "44788715368-1",
-          "playDate": "2026-11-22",
-          "course": "TEE 1 AMARILLO",
-          "capturedAt": "2026-11-20T20:00:10.536418335+01:00",
-          "players": 2,
-          "holes": 18,
-          "selectedTime": null,
-          "options": []
-        },
-        {
-          "executionId": "44788715368-1",
-          "playDate": "2026-11-22",
-          "course": "TEE 1 VERDE",
-          "capturedAt": "2026-11-20T20:00:15.07245653+01:00",
-          "players": 2,
-          "holes": 18,
-          "selectedTime": null,
-          "options": []
-        }
-      ],
-      "bookingDurationSeconds": null,
-      "bookingFormStartedAt": null,
-      "executionDate": "2026-11-20",
-      "blockedAt": null,
-      "executionId": "44788715368-1",
-      "schemaVersion": 1
-    },
-    {
-      "requested": null,
       "startedAt": "2026-11-21T08:50:55.756096538+01:00",
       "confirmedAt": null,
       "booked": null,
