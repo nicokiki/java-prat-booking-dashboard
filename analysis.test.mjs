@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {median, bookingMetrics, availabilityAnalysis, snapshotObservation, observationsCsv} from './analysis.mjs';
+import {median, bookingMetrics, availabilityAnalysis, snapshotObservation, observationsCsv, inspectionVariants} from './analysis.mjs';
 
 const option = (time, places = 4, enabled = true) => ({time, places, enabled});
 const snapshot = (playDate, options, extra = {}) => ({playDate, options, course: 'TEE 1 ROSA', players: 2, holes: 18,
@@ -77,6 +77,27 @@ test('times never observed are not invented, and other courses or nine-hole roun
     snapshot('2026-11-14', [option('08:30')], {holes:9})];
   assert.deepEqual(availabilityAnalysis(source, {course:'Rosa'}).times, ['08:00','08:20']);
   assert.equal(availabilityAnalysis(source, {course:'Rosa', start:'09:00', end:'10:00'}).median, null);
+});
+
+test('nine-hole analysis is isolated and retains its hole count in CSV',() => {
+  const source = [snapshot('2026-11-13',[]),snapshot('2026-11-13',[option('09:00')],{holes:9})];
+  assert.deepEqual(availabilityAnalysis(source,{course:'Rosa',holes:18}).times,[]);
+  const nine = availabilityAnalysis(source,{course:'Rosa',holes:9});
+  assert.deepEqual(nine.times,['09:00']);
+  assert.equal(nine.rows.length,1);
+  assert.match(observationsCsv(nine),/"Rosa","2","9"/);
+});
+
+test('execution variants distinguish empty eighteen, observed nine and eighteen not offered',() => {
+  const eighteen = snapshot('2026-11-13',[]);
+  const nine = snapshot('2026-11-13',[option('09:00')],{holes:9});
+  const both = inspectionVariants([eighteen,nine],['Rosa']);
+  assert.deepEqual(both.map(variant => variant.holes),[18,9]);
+  assert.equal(both[0].snapshot,eighteen);
+  const onlyNine = inspectionVariants([{...nine,fallbackReason:'18-not-offered'}],['Rosa']);
+  assert.equal(onlyNine[0].snapshot,undefined);
+  assert.equal(onlyNine[0].notOffered,true);
+  assert.equal(inspectionVariants([],['Verde'])[0].notOffered,false);
 });
 
 test('invalid or incomplete timing samples are excluded without dropping legitimate zero-duration samples', () => {

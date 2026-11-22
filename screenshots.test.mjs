@@ -22,6 +22,14 @@ test('duplicates are excluded and stages/courses have stable ordering',() => {
   const recheck = {...image,stage:'recheck',path:'data/executions/run-1/screenshots/rosa-recheck.png'};
   assert.deepEqual(executionScreenshots({...report,screenshots:[recheck,image,image]}),[image,recheck]);
 });
+
+test('nine-hole PNGs coexist with eighteen and cannot be attached to booking runs',() => {
+  const nine = {...image,holes:9,path:'data/executions/run-1/screenshots/rosa-9-initial.png'};
+  const availability = [{course:'TEE 1 ROSA',holes:9,options:[]}];
+  assert.deepEqual(executionScreenshots({...report,availability,screenshots:[nine,image]}),[image,nine]);
+  assert.deepEqual(executionScreenshots({...report,requested:'Rosa 09:00',availability,screenshots:[nine]}),[]);
+  assert.deepEqual(executionScreenshots({...report,screenshots:[nine]}),[]);
+});
 test('a full 52-option page fits both desktop and mobile without upscaling',() => {
   for (const [width,height] of [[1034,638],[336,620]]) {
     const scale = fitZoom(840,2688,width,height);

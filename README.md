@@ -40,11 +40,17 @@ The repository contains the static HTML and bundled Spectrum JavaScript, stylesh
 
 The booking repository's workflow backs up each report, then publishes an allowlisted record using `DASHBOARD_PUBLISH_TOKEN`. This publishing secret belongs only in the booking repository's Actions secrets, never in this site or its JavaScript.
 
-The archive preserves one entry per execution ID. Availability history filters by full play date and course, showing all recorded player counts for 18-hole snapshots. Each execution column labels its player count; change indicators only compare snapshots with matching player counts. Only observed courses have snapshots. New availability-only schedules are not part of this integration.
+The archive preserves one entry per execution ID. Availability history filters by full play date, course and hole count (18 by default, or 9), showing all recorded player counts. Each execution column labels its player count; change indicators only compare matching player and hole counts. Only observed courses have snapshots. New availability-only schedules are not part of this integration.
 
 When a valid Google Sheet has no row for the target play date, the existing run
 inspects Rosa and Amarillo, plus Verde when offered in the course dropdown, for
-**2 players, 18 holes**. Missing Verde is normal and does not make the run fail.
+**2 players**, preferring **18 holes**. Only informational inspections check
+**9 holes** when a successful completed response confirms no eighteen-hole times
+and nine is offered. Empty eighteen and subsequent nine observations remain
+distinct. If only nine is offered, execution details say **18 holes not offered**;
+no empty eighteen snapshot is fabricated. API/pending/closed/malformed failures do
+not trigger the fallback. Booking runs remain eighteen-only.
+Missing Verde is normal and does not make the run fail.
 It is shown as **Not offered for this date**, without a fabricated empty snapshot.
 A complete
 inspection appears as **Informational**, with all offered times, no requested-time
@@ -72,7 +78,7 @@ Missing or inconsistent timestamps are excluded, never replaced with zero.
 **Not bookable means not listed in the dropdown.** Listed options, including disabled
 ones or options with too few places, do not increase that metric. The grid retains
 those distinctions and marks the selected time. Each execution uses its actual
-snapshot; daily summaries use the earliest saved snapshot per course and play date
+snapshot; daily summaries use the earliest saved snapshot per course, hole count and play date
 so retries do not add sample days. Weekday groups use the play date, not the run
 date. Friday, combined weekends, Saturday and Sunday are shown with sample counts.
 
@@ -84,7 +90,10 @@ so historical counts can change as the archive grows. Times never observed canno
 be detected as missing. No snapshot for a course is not an empty dropdown; it is
 excluded from counts. If no reference times are known, the median stays unknown.
 
-Aggregate analysis uses two players and 18 holes. Course, play-date range, tee-time
+Aggregate analysis uses two players and the selected hole count (18 by default).
+Nine-hole samples are conditional fallback checks, not a complete survey; missing
+observations are unknown, not unavailable. The reference and comparisons never
+mix nine and eighteen holes. Hole count, course, play-date range, tee-time
 window and Friday/weekend filters are responsive on mobile. Comparisons are of
 snapshots, not all-day availability; capture times can vary. CSV export includes
 capture timestamps, execution IDs, the reference method and reference time list so
@@ -100,7 +109,7 @@ image-viewer regressions. The check workflow runs these tests on pushes and pull
 The Tee times tab shows Initial/Recheck thumbnails when an execution has saved
 `screenshots` references. Older executions without images have no gallery.
 Each PNG contains all dropdown options on one full-height page; the viewer fits
-the complete image first, with minus/plus zoom, a fit reset, and course navigation.
+the complete image first, with minus/plus zoom, a fit reset, and course/hole navigation.
 Zoomed images scroll inside the viewer. Capture times are the original read times,
 not the later rendering or publication time. Missing image files show an unavailable
 state without changing booking outcomes or availability calculations.
@@ -112,6 +121,8 @@ snapshots, not live screenshots taken during booking. Raw HTML logs are never co
 The publisher checks execution/date/player provenance and PNG integrity, strips
 embedded PNG metadata, and stores images at
 `data/executions/EXECUTION_ID/screenshots/COURSE-STAGE.png` with relative JSON paths.
+Nine-hole variants use `COURSE-9-STAGE.png` and have separate thumbnails/captions.
+Legacy references without a hole count are treated as eighteen holes.
 No GitHub artifact URLs, tokens or credentials are embedded in the page.
 
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.

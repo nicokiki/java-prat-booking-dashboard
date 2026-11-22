@@ -278,17 +278,19 @@ pre { background: var(--bg); border-radius: 4px; }
     <div class="analysis-controls">
       <label>From play date<input id="analysis-from" type="date"></label><label>Through play date<input id="analysis-through" type="date"></label>
       <label>Course<select id="analysis-course"><option>Rosa</option><option>Amarillo</option><option>Verde</option></select></label>
+      <label>Holes<select id="analysis-holes"><option value="18">18 holes</option><option value="9">9 holes</option></select></label>
       <label>From tee time<input id="analysis-start" type="time" value="00:00"></label><label>Through tee time<input id="analysis-end" type="time" value="23:59"></label>
       <label>Play days<select id="analysis-days-filter"><option value="all">All days</option><option value="friday">Fridays</option><option value="weekend">Weekends</option></select></label>
     </div>
-    <div class="analysis-kpis"><div><strong id="missing-median">--</strong><span>Median not bookable / play date (not listed)</span></div><div><strong id="observed-dates">0</strong><span>Observed play dates &middot; 2 players &middot; 18 holes</span></div></div>
+    <div class="analysis-kpis"><div><strong id="missing-median">--</strong><span>Median not bookable / play date (not listed)</span></div><div><strong id="observed-dates">0</strong><span>Observed play dates &middot; 2 players &middot; <span id="analysis-hole-label">18</span> holes</span></div></div>
+    <p id="nine-hole-note" class="analysis-note" hidden>Nine-hole observations are conditional fallback checks, not a complete survey. Missing observations do not mean unavailable.</p>
     <p class="analysis-note" id="analysis-reference"></p>
     <div class="analysis-layout" id="analysis-daily"><div class="analysis-dates"><div class="analysis-date-head"><span>Play date</span><span>Not bookable</span><span>Reference</span></div><div id="analysis-days"></div></div><div class="analysis-snapshot" id="analysis-snapshot"></div></div>
     <p id="analysis-empty" class="analysis-note" hidden>No recorded observations match these filters. Missing observations are not counted as unavailable.</p>
     <h3 style="margin-top:24px">Friday &amp; weekend patterns</h3>
     <p class="analysis-note">Entire selected date range. One earliest saved snapshot per course and play date; retries do not add sample days. Capture times may vary.</p>
     <div class="pattern-heading"><span>Play-day group</span><span>Median not bookable (not listed)</span><span>Play dates</span></div><div id="analysis-patterns"></div><div class="pattern-axis"><span>0 not listed</span><span id="analysis-axis-end"></span></div>
-    <p class="analysis-note">Reference: tee times ever observed for this course, party size and 18 holes, within the selected time window. It is not the club's official timetable; times never observed cannot be counted. Absent times do not identify purchasers or explain why a start is missing. This is snapshot evidence, not all-day availability.</p>
+    <p class="analysis-note">Reference: tee times ever observed for this course, party size and selected hole count, within the selected time window. It is not the club's official timetable; times never observed cannot be counted. Absent times do not identify purchasers or explain why a start is missing. This is snapshot evidence, not all-day availability.</p>
   </section>
   <section aria-labelledby="history-title">
     <div class="toolbar"><h2 id="history-title">Execution history</h2><div class="filter-control"><sp-field-label for="filter" side-aligned="start">Outcome</sp-field-label><sp-picker id="filter" value="all" label="Outcome"><sp-menu-item value="all">All outcomes</sp-menu-item><sp-menu-item value="Confirmed">Confirmed</sp-menu-item><sp-menu-item value="Unavailable">Unavailable</sp-menu-item><sp-menu-item value="Technical Failure">Technical Failure</sp-menu-item><sp-menu-item value="Informational">Informational</sp-menu-item></sp-picker></div></div>
@@ -305,6 +307,7 @@ pre { background: var(--bg); border-radius: 4px; }
     <div class="availability-controls">
       <div class="availability-control"><sp-field-label for="availability-date">Play date</sp-field-label><sp-picker id="availability-date" label="Play date"></sp-picker></div>
       <div class="availability-control"><sp-field-label for="availability-course">Course</sp-field-label><sp-picker id="availability-course" value="all" label="Course"><sp-menu-item value="all">All courses</sp-menu-item><sp-menu-item value="Rosa">Rosa</sp-menu-item><sp-menu-item value="Amarillo">Amarillo</sp-menu-item><sp-menu-item value="Verde">Verde</sp-menu-item></sp-picker></div>
+      <div class="availability-control"><sp-field-label for="availability-holes">Holes</sp-field-label><sp-picker id="availability-holes" value="18" label="Holes"><sp-menu-item value="18">18 holes</sp-menu-item><sp-menu-item value="9">9 holes</sp-menu-item></sp-picker></div>
     </div>
     <p class="snapshot-note" id="availability-context"></p>
     <div class="table-wrap" id="availability-matrix"></div>
@@ -329,7 +332,7 @@ pre { background: var(--bg); border-radius: 4px; }
 </sp-theme>
 <script type="module">
 import './spectrum.bundle.js';
-import {bookingMetrics, availabilityAnalysis, snapshotObservation, observationsCsv} from './analysis.mjs';
+import {bookingMetrics, availabilityAnalysis, snapshotObservation, observationsCsv, inspectionVariants} from './analysis.mjs';
 import {renderScreenshots,screenshotViewer} from './screenshots.mjs';
 const imageViewer = screenshotViewer(document.getElementById('screenshot-dialog'));
 const theme = document.querySelector('sp-theme');
@@ -453,32 +456,32 @@ function eligibility(option) {
 function renderExecutionAvailability() {
   const snapshots = executionAvailability[selected.id] || [];
   const courses = selected.report.requested == null ? ['Rosa','Amarillo','Verde'] : selected.requested.startsWith('Verde ') ? ['Verde'] : ['Rosa','Amarillo'];
+  const variants = inspectionVariants(snapshots,courses);
   const missingCourse = course => course === 'Verde' && selected.outcome === 'Informational' ? 'Not offered for this date' : 'Not checked during this execution';
-  const metadata = courses.map(course => {
-    const snapshot = snapshots.find(item => item.course === course);
-    return '<div><strong>'+course+'</strong><span class="muted">'+(snapshot ? 'Captured '+escape(captureLabel(snapshot)) : missingCourse(course))+'</span></div>';
+  const metadata = variants.map(({course,holes,snapshot,notOffered}) => {
+    return '<div><strong>'+course+' / '+holes+' holes</strong><span class="muted">'+(snapshot ? (snapshot.options.length ? snapshot.options.length+' times | ' : 'No times | ')+'Captured '+escape(captureLabel(snapshot)) : notOffered ? '18 holes not offered' : missingCourse(course))+'</span></div>';
   }).join('');
-  const rows = courses.map(course => {
-    const snapshot = snapshots.find(item => item.course === course);
-    if (!snapshot) return '<tr><td>'+course+'</td><td colspan="4" class="muted">'+missingCourse(course)+'</td></tr>';
-    if (!snapshot.options.length) return '<tr><td>'+course+'</td><td colspan="4" class="muted">No times offered in this snapshot</td></tr>';
+  const rows = variants.map(({course,holes,snapshot,notOffered}) => {
+    if (!snapshot) return '<tr><td>'+course+'</td><td>'+holes+'</td><td colspan="4" class="muted">'+(notOffered ? '18 holes not offered' : missingCourse(course))+'</td></tr>';
+    if (!snapshot.options.length) return '<tr><td>'+course+'</td><td>'+holes+'</td><td colspan="4" class="muted">No times offered in this snapshot</td></tr>';
     return [...snapshot.options].sort((first,second) => first.time.localeCompare(second.time)).map(option => {
       const [variant,label] = eligibility(option);
       const chosen = snapshot.selectedTime === option.time;
       const selection = chosen ? (selected.outcome === 'Confirmed' ? 'Selected / confirmed' : 'Selected / not confirmed') : '';
-      return '<tr'+(chosen ? ' class="selected"' : '')+'><td>'+course+'</td><td><strong>'+option.time+'</strong></td><td>'+(option.places === null ? 'Not stated' : option.places)+'</td><td><sp-status-light variant="'+variant+'" size="s">'+label+'</sp-status-light></td><td>'+selection+'</td></tr>';
+      return '<tr'+(chosen ? ' class="selected"' : '')+'><td>'+course+'</td><td>'+holes+'</td><td><strong>'+option.time+'</strong></td><td>'+(option.places === null ? 'Not stated' : option.places)+'</td><td><sp-status-light variant="'+variant+'" size="s">'+label+'</sp-status-light></td><td>'+selection+'</td></tr>';
     }).join('');
   }).join('');
   const grids = snapshots.map(snapshot => {
     const reference = availabilityAnalysis(availabilityArchive, {course:snapshot.course, players:snapshot.players, holes:snapshot.holes});
     return observationGrid(snapshotObservation(snapshot, reference.times), reference.times);
   }).join('');
-  document.getElementById('execution-availability').innerHTML = '<div><div class="execution-screenshots" id="execution-screenshots" hidden></div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+formatDate(selected.playDate)+' | '+(selected.players ?? 'Unknown')+' players | 18 holes | '+(selected.report.requested == null ? 'No booking requested | No reservation attempted' : 'Requested: '+escape(selected.requested)+' | +/-90 minutes')+'</p>'+grids+'<details class="observation-details"><summary>Listed tee times and booking eligibility</summary><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></details></div>';
+  const holeCounts = [...new Set(snapshots.map(snapshot => snapshot.holes))].sort((first,second) => second-first).join(' / ') || '18';
+  document.getElementById('execution-availability').innerHTML = '<div><div class="execution-screenshots" id="execution-screenshots" hidden></div><div class="snapshot-meta">'+metadata+'</div><p class="snapshot-note">Play: '+formatDate(selected.playDate)+' | '+(selected.players ?? 'Unknown')+' players | '+holeCounts+' holes | '+(selected.report.requested == null ? 'No booking requested | No reservation attempted' : 'Requested: '+escape(selected.requested)+' | +/-90 minutes')+'</p>'+grids+'<details class="observation-details"><summary>Listed tee times and booking eligibility</summary><div class="table-wrap"><table class="availability-table"><thead><tr><th>Course</th><th>Holes</th><th>Tee time</th><th>Places</th><th>Eligibility</th><th>Selection</th></tr></thead><tbody>'+rows+'</tbody></table></div></details></div>';
   renderScreenshots(document.getElementById('execution-screenshots'),selected.report,imageViewer);
 }
 function observationGrid(row, times) {
   const snapshot = row.snapshot;
-  const heading = '<h3>'+escape(courseName(snapshot.course))+' / '+formatDate(row.playDate)+'</h3><p class="snapshot-note">Captured '+escape(captureLabel(snapshot))+' | '+escape(snapshot.executionId)+' | '+escape(snapshot.players)+' players | '+escape(snapshot.holes)+' holes</p>';
+  const heading = '<h3>'+escape(courseName(snapshot.course))+' / '+snapshot.holes+' holes / '+formatDate(row.playDate)+'</h3><p class="snapshot-note">Captured '+escape(captureLabel(snapshot))+' | '+escape(snapshot.executionId)+' | '+escape(snapshot.players)+' players | '+escape(snapshot.holes)+' holes</p>';
   if (!times.length) return '<div class="observation-grid">'+heading+'<p class="analysis-note">No observed reference times in this window. The missing-time count is unknown, not zero.</p></div>';
   const cells = row.slots.map(slot => {
     const label = slot.state === 'missing' ? 'Not listed' : !slot.option.enabled ? 'Disabled' : slot.option.places == null ? 'Listed' : slot.option.places+' '+(slot.option.places === 1 ? 'place' : 'places');
@@ -491,15 +494,18 @@ function renderAvailabilityAnalysis() {
   const through = document.getElementById('analysis-through');
   const start = document.getElementById('analysis-start');
   const end = document.getElementById('analysis-end');
+  const holes = Number(document.getElementById('analysis-holes').value);
   if (from.value > through.value) through.value = from.value;
   if (start.value > end.value) end.value = start.value;
-  currentAnalysis = availabilityAnalysis(availabilityArchive, {course:document.getElementById('analysis-course').value,
+  currentAnalysis = availabilityAnalysis(availabilityArchive, {course:document.getElementById('analysis-course').value,holes,
     from:from.value, through:through.value || '9999-12-31', start:start.value || '00:00', end:end.value || '23:59', days:document.getElementById('analysis-days-filter').value});
   const {rows, times, groups} = currentAnalysis;
   if (!rows.some(row => row.playDate === analysisSelectedDate)) analysisSelectedDate = rows.at(-1)?.playDate;
   document.getElementById('missing-median').textContent = currentAnalysis.median === null ? '--' : currentAnalysis.median+' / '+times.length;
   document.getElementById('observed-dates').textContent = rows.length;
-  document.getElementById('analysis-reference').textContent = 'Observed reference: '+times.length+' distinct starts across '+currentAnalysis.referenceDates+' saved play dates for this course, 2 players and 18 holes. The reference uses all saved dates, not only the selected date range.';
+  document.getElementById('analysis-hole-label').textContent = holes;
+  document.getElementById('nine-hole-note').hidden = holes !== 9;
+  document.getElementById('analysis-reference').textContent = 'Observed reference: '+times.length+' distinct starts across '+currentAnalysis.referenceDates+' saved play dates for this course, 2 players and '+holes+' holes. The reference uses all saved dates, not only the selected date range.';
   document.getElementById('analysis-days').innerHTML = [...rows].reverse().map(row => '<button class="analysis-date" data-analysis-date="'+row.playDate+'" aria-pressed="'+(row.playDate === analysisSelectedDate)+'"><span>'+escape(new Intl.DateTimeFormat('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(row.playDate+'T12:00:00Z')))+'</span><strong>'+(row.missing ?? '--')+'</strong><span>'+times.length+'</span></button>').join('');
   document.querySelectorAll('[data-analysis-date]').forEach(button => button.addEventListener('click', () => { analysisSelectedDate = button.dataset.analysisDate; renderAvailabilityAnalysis(); }));
   const selectedRow = rows.find(row => row.playDate === analysisSelectedDate);
@@ -530,9 +536,10 @@ function matrixCell(snapshot, previousSnapshot, time) {
 function renderAvailabilityHistory() {
   const play = document.getElementById('availability-date').value;
   const course = document.getElementById('availability-course').value || 'all';
-  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === play && snapshot.holes === 18);
+  const holes = Number(document.getElementById('availability-holes').value || '18');
+  const snapshots = availabilityArchive.filter(snapshot => snapshot.playDate === play && snapshot.holes === holes);
   const groups = [...new Set(snapshots.map(snapshot => snapshot.executionId))].map(id => ({id, snapshots:snapshots.filter(snapshot => snapshot.executionId === id)})).sort((first,second) => first.snapshots[0].capturedAt.localeCompare(second.snapshots[0].capturedAt));
-  document.getElementById('availability-context').textContent = play ? 'Play: '+formatDate(play)+' | '+groups.length+' executions | Offered places, including slots outside the booking window' : 'No availability snapshots recorded.';
+  document.getElementById('availability-context').textContent = play ? 'Play: '+formatDate(play)+' | '+holes+' holes | '+groups.length+' executions | Offered places, including slots outside the booking window' : 'No availability snapshots recorded.';
   const container = document.getElementById('availability-matrix');
   if (!groups.length) { container.innerHTML = '<p class="availability-empty">No snapshots for this play date.</p>'; return; }
   const headings = groups.map(group => '<th scope="col">'+escape(captureLabel(group.snapshots[0]))+'<span class="sub">'+escape(group.id)+'</span><span class="sub">'+escape(group.snapshots[0].players)+' players</span></th>').join('');
@@ -550,7 +557,7 @@ const dates = [...new Set(availabilityArchive.map(snapshot => snapshot.playDate)
 document.getElementById('availability-date').innerHTML = dates.map(date => '<sp-menu-item value="'+date+'">'+formatDate(date)+'</sp-menu-item>').join('');
 document.getElementById('availability-date').value = dates[0] || '';
 document.getElementById('availability-date').disabled = !dates.length;
-['availability-date','availability-course'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
+['availability-date','availability-course','availability-holes'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityHistory));
 function renderOverview() {
   const outcomes = ['Confirmed','Unavailable','Technical Failure','Informational'];
   const counts = outcomes.map(outcome => runs.filter(run => run.outcome === outcome).length);
@@ -574,13 +581,13 @@ function renderOverview() {
   notice.hidden = !loadError && unconfirmed === 0;
   notice.textContent = loadError ? 'Execution results could not be loaded. Reload to try again.' : unconfirmed+' executions need verification. Check TeeOne before retrying.';
 }
-const analysisDates = [...new Set(availabilityArchive.filter(snapshot => snapshot.players === 2 && snapshot.holes === 18).map(snapshot => snapshot.playDate))].sort();
+const analysisDates = [...new Set(availabilityArchive.filter(snapshot => snapshot.players === 2 && [9,18].includes(snapshot.holes)).map(snapshot => snapshot.playDate))].sort();
 document.getElementById('analysis-from').value = analysisDates[0] || '';
 document.getElementById('analysis-through').value = analysisDates.at(-1) || '';
-const referenceOptions = availabilityArchive.filter(snapshot => snapshot.players === 2 && snapshot.holes === 18).flatMap(snapshot => snapshot.options.map(option => option.time)).sort();
+const referenceOptions = availabilityArchive.filter(snapshot => snapshot.players === 2 && [9,18].includes(snapshot.holes)).flatMap(snapshot => snapshot.options.map(option => option.time)).sort();
 document.getElementById('analysis-start').value = referenceOptions[0] || '00:00';
 document.getElementById('analysis-end').value = referenceOptions.at(-1) || '23:59';
-['analysis-from','analysis-through','analysis-course','analysis-start','analysis-end','analysis-days-filter'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityAnalysis));
+['analysis-from','analysis-through','analysis-course','analysis-holes','analysis-start','analysis-end','analysis-days-filter'].forEach(id => document.getElementById(id).addEventListener('change', renderAvailabilityAnalysis));
 document.getElementById('export-analysis').addEventListener('click', () => {
   if (!currentAnalysis?.rows.length || !currentAnalysis.times.length) return;
   const url = URL.createObjectURL(new Blob([observationsCsv(currentAnalysis)], {type:'text/csv;charset=utf-8'}));

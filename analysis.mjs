@@ -11,6 +11,15 @@ export function courseName(value) {
   return match ? match[1][0].toUpperCase() + match[1].slice(1).toLowerCase() : String(value || 'Not recorded');
 }
 
+export function inspectionVariants(snapshots,courses) {
+  return courses.flatMap(course => {
+    const eighteen = snapshots.find(snapshot => courseName(snapshot.course) === course && snapshot.holes === 18);
+    const nine = snapshots.find(snapshot => courseName(snapshot.course) === course && snapshot.holes === 9);
+    return [{course,holes:18,snapshot:eighteen,notOffered:!eighteen && nine?.fallbackReason === '18-not-offered'},
+      ...(nine ? [{course,holes:9,snapshot:nine,notOffered:false}] : [])];
+  });
+}
+
 export function bookingMetrics(reports) {
   const attempts = reports.filter(report => report.outcome !== 'Informational' && typeof report.requested === 'string' && report.requested.trim());
   const confirmed = attempts.filter(report => report.outcome === 'Confirmed');
