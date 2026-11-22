@@ -108,16 +108,18 @@ image-viewer regressions. The check workflow runs these tests on pushes and pull
 
 The Tee times tab shows Initial/Recheck thumbnails when an execution has saved
 `screenshots` references. Older executions without images have no gallery.
-Each PNG contains all dropdown options on one full-height page; the viewer fits
+New PNGs show the selected play date, Recorrido, Numero de hoyos and Jugadores
+controls above all tee-time options on one full-height page; the viewer fits
 the complete image first, with minus/plus zoom, a fit reset, and course/hole navigation.
 Zoomed images scroll inside the viewer. Capture times are the original read times,
 not the later rendering or publication time. Missing image files show an unavailable
 state without changing booking outcomes or availability calculations.
 
 The Java workflow renders PNGs only after booking/inspection, report saving and
-email handling. It draws time/capacity labels and selected/disabled states only;
+email handling. It draws allowlisted selected filters, time/capacity labels and selected/disabled states;
 member-name suffixes and arbitrary text are removed or redacted. These are rendered
-snapshots, not live screenshots taken during booking. Raw HTML logs are never copied.
+snapshots, not live screenshots taken during booking. Historical images retain
+their original layout. Raw HTML logs are never copied.
 The publisher checks execution/date/player provenance and PNG integrity, strips
 embedded PNG metadata, and stores images at
 `data/executions/EXECUTION_ID/screenshots/COURSE-STAGE.png` with relative JSON paths.

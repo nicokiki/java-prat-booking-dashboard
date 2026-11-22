@@ -77,7 +77,7 @@ export function screenshotViewer(dialog) {
     dialog.querySelector('.screenshot-position').textContent = (index+1)+' of '+images.length;
     dialog.querySelector('[data-image-action="previous"]').disabled = index === 0;
     dialog.querySelector('[data-image-action="next"]').disabled = index === images.length-1;
-    image.alt = names[selected.course]+' '+(selected.holes ?? 18)+'-hole full-page dropdown snapshot';
+    image.alt = names[selected.course]+' '+(selected.holes ?? 18)+'-hole full-page availability snapshot';
     image.onload = () => { ready = true; image.hidden = false; status.hidden = true; fit(); };
     image.onerror = () => { ready = false; image.hidden = true; status.hidden = false; status.textContent = 'Image unavailable'; };
     image.src = selected.path;
@@ -104,7 +104,7 @@ export function renderScreenshots(container,report,viewer) {
   const images = executionScreenshots(report);
   container.hidden = !images.length;
   if (!images.length) return;
-  const heading = document.createElement('h3'); heading.textContent = 'Dropdown snapshots';
+  const heading = document.createElement('h3'); heading.textContent = 'Availability snapshots';
   const description = document.createElement('p'); description.className = 'snapshot-note';
   description.textContent = images.length+' full-page PNGs | Original capture times in Europe/Madrid';
   const stages = ['initial','recheck'].filter(stage => images.some(image => image.stage === stage));
@@ -119,7 +119,7 @@ export function renderScreenshots(container,report,viewer) {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'screenshot-thumbnail'; button.setAttribute('aria-haspopup','dialog');
       button.setAttribute('aria-label','View '+names[snapshot.course]+' '+(snapshot.holes ?? 18)+'-hole '+stage+' snapshot');
       button.title = 'Open full-page snapshot';
-      const image = document.createElement('img'); image.src = snapshot.path; image.alt = names[snapshot.course]+' '+(snapshot.holes ?? 18)+'-hole dropdown snapshot'; image.loading = 'lazy';
+      const image = document.createElement('img'); image.src = snapshot.path; image.alt = names[snapshot.course]+' '+(snapshot.holes ?? 18)+'-hole availability snapshot'; image.loading = 'lazy';
       const error = document.createElement('span'); error.textContent = 'Image unavailable'; error.hidden = true;
       image.addEventListener('error',() => { image.hidden = true; error.hidden = false; });
       button.append(image,error); button.addEventListener('click',() => viewer.open(selected,position));
