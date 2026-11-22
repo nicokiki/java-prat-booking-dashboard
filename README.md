@@ -82,6 +82,16 @@ snapshot; daily summaries use the earliest saved snapshot per course, hole count
 so retries do not add sample days. Weekday groups use the play date, not the run
 date. Friday, combined weekends, Saturday and Sunday are shown with sample counts.
 
+Both the execution and Member-view grids shade stated capacities from 1 (lightest)
+through 4 (strongest). Listed options stay green, limited options stay amber, and
+missing times stay grey. Unknown capacity receives no capacity shade. Counts and
+booking eligibility are unchanged.
+
+Booking runs retain snapshots from every attempted course and inspect remaining
+Rosa, Amarillo and offered Verde after confirmation, or after both choices have no
+match. These follow-up snapshots use the requested player count and 18 holes;
+they never trigger another reservation or overwrite the original booking result.
+
 The reference is the union of tee times actually recorded for the same course,
 player count and hole count, within the selected time window. It uses all saved
 dates, even when a narrower date range is selected. No ten-minute schedule or

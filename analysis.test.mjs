@@ -29,6 +29,20 @@ test('missing course is not an empty observation, and no known reference is not 
   assert.equal(empty.rows[0].missing, null);
 });
 
+test('both observation views retain one-to-four capacity shades without changing eligibility or missing counts', () => {
+  const source = snapshot('2026-11-13', [option('08:00',1), option('08:10',2), option('08:20',3), option('08:30',4),
+    option('08:40',null), option('08:50',4,false)]);
+  const times = source.options.map(entry => entry.time).concat('09:00');
+  const execution = snapshotObservation(source,times);
+  assert.deepEqual(execution.slots.map(slot => slot.capacity),[1,2,3,4,null,4,null]);
+  assert.deepEqual(execution.slots.map(slot => slot.state),['limited','listed','listed','listed','listed','limited','missing']);
+  assert.equal(execution.missing,1);
+  const daily = availabilityAnalysis([source],{course:'Rosa'}).rows[0];
+  assert.deepEqual(daily.slots.map(slot => slot.capacity),[1,2,3,4,null,4]);
+  assert.deepEqual(snapshotObservation(snapshot('2026-11-13',[option('08:00',0),option('08:10',5),option('08:20','2')]),
+    ['08:00','08:10','08:20']).slots.map(slot => slot.capacity),[null,null,null]);
+});
+
 test('reference is stable across date filters and weekday uses play date, not capture date', () => {
   const source = [snapshot('2026-11-13', [option('08:00')], {capturedAt: '2026-11-11T20:00:03+01:00'}),
     snapshot('2026-11-14', [option('08:00'), option('08:10'), option('08:20')])];

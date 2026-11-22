@@ -53,7 +53,8 @@ export function snapshotObservation(snapshot, times) {
   const listed = new Map(snapshot.options.map(option => [option.time, option]));
   const slots = times.map(time => {
     const option = listed.get(time);
-    return {time, option, state: !option ? 'missing' : !option.enabled || option.places != null && option.places < snapshot.players ? 'limited' : 'listed'};
+    const capacity = Number.isInteger(option?.places) && option.places >= 1 && option.places <= 4 ? option.places : null;
+    return {time, option, capacity, state: !option ? 'missing' : !option.enabled || option.places != null && option.places < snapshot.players ? 'limited' : 'listed'};
   });
   return {snapshot, playDate: snapshot.playDate, slots, missing: times.length ? slots.filter(slot => slot.state === 'missing').length : null,
     limited: slots.filter(slot => slot.state === 'limited').length};
