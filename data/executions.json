@@ -2,19 +2,7 @@
   "schemaVersion": 1,
   "executions": [
     {
-      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
       "bookingDurationSeconds": null,
-      "startedAt": "2026-11-14T19:36:11.384979798+01:00",
-      "blockedAt": null,
-      "availability": [],
-      "executionDate": "2026-11-14",
-      "schemaVersion": 1,
-      "executionId": "43624186514-1",
-      "requested": null,
-      "players": null,
-      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
-      "outcome": "Technical failure",
-      "booked": null,
       "participants": [
         {
           "role": "booking-holder",
@@ -22,15 +10,40 @@
           "licencia": null
         }
       ],
+      "schemaVersion": 1,
+      "players": null,
+      "blockedAt": null,
+      "bookingFormStartedAt": null,
+      "availability": [],
       "playDate": "2026-11-16",
+      "outcome": "Technical failure",
+      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
+      "booked": null,
+      "executionId": "43624186514-1",
+      "requested": null,
+      "finishedAt": "2026-11-14T19:36:12.473169544+01:00",
+      "startedAt": "2026-11-14T19:36:11.384979798+01:00",
       "confirmedAt": null,
-      "bookingFormStartedAt": null
+      "executionDate": "2026-11-14"
     },
     {
-      "finishedAt": "2026-11-15T20:00:14.021183321+01:00",
       "bookingDurationSeconds": 11.363,
-      "startedAt": "2026-11-15T19:36:11.795382345+01:00",
+      "participants": [
+        {
+          "role": "booking-holder",
+          "name": null,
+          "licencia": null
+        },
+        {
+          "role": "socio",
+          "name": "PISANDELLI, JUAN CRUZ",
+          "licencia": "CB05084626"
+        }
+      ],
+      "schemaVersion": 1,
+      "players": 2,
       "blockedAt": "2026-11-15T20:00:05.079382303+01:00",
+      "bookingFormStartedAt": null,
       "availability": [
         {
           "executionId": "43744285553-1",
@@ -284,35 +297,24 @@
           ]
         }
       ],
-      "executionDate": "2026-11-15",
-      "schemaVersion": 1,
+      "playDate": "2026-11-17",
+      "outcome": "Confirmed",
+      "summary": "Reservation success message observed.",
+      "booked": "TEE 1 ROSA 09:10",
       "executionId": "43744285553-1",
       "requested": "TEE 1 ROSA 9:10",
-      "players": 2,
-      "summary": "Reservation success message observed.",
-      "outcome": "Confirmed",
-      "booked": "TEE 1 ROSA 09:10",
-      "participants": [
-        {
-          "role": "booking-holder",
-          "name": null,
-          "licencia": null
-        },
-        {
-          "role": "socio",
-          "name": "PISANDELLI, JUAN CRUZ",
-          "licencia": "CB05084626"
-        }
-      ],
-      "playDate": "2026-11-17",
+      "finishedAt": "2026-11-15T20:00:14.021183321+01:00",
+      "startedAt": "2026-11-15T19:36:11.795382345+01:00",
       "confirmedAt": "2026-11-15T20:00:12.36313468+01:00",
-      "bookingFormStartedAt": null
+      "executionDate": "2026-11-15"
     },
     {
-      "finishedAt": "2026-11-16T20:00:34.364253767+01:00",
       "bookingDurationSeconds": null,
-      "startedAt": "2026-11-16T19:36:27.099876729+01:00",
+      "participants": [],
+      "schemaVersion": 1,
+      "players": 2,
       "blockedAt": null,
+      "bookingFormStartedAt": null,
       "availability": [
         {
           "executionId": "43924327800-1",
@@ -797,24 +799,24 @@
           ]
         }
       ],
-      "executionDate": "2026-11-16",
-      "schemaVersion": 1,
+      "playDate": "2026-11-18",
+      "outcome": "Technical failure",
+      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
+      "booked": null,
       "executionId": "43924327800-1",
       "requested": null,
-      "players": 2,
-      "summary": "Booking stopped before reservation submission. Check the workflow logs.",
-      "outcome": "Technical failure",
-      "booked": null,
-      "participants": [],
-      "playDate": "2026-11-18",
+      "finishedAt": "2026-11-16T20:00:34.364253767+01:00",
+      "startedAt": "2026-11-16T19:36:27.099876729+01:00",
       "confirmedAt": null,
-      "bookingFormStartedAt": null
+      "executionDate": "2026-11-16"
     },
     {
-      "finishedAt": "2026-11-17T20:00:09.882707543+01:00",
       "bookingDurationSeconds": null,
-      "startedAt": "2026-11-17T19:36:33.388873991+01:00",
+      "participants": [],
+      "schemaVersion": 1,
+      "players": 2,
       "blockedAt": null,
+      "bookingFormStartedAt": null,
       "availability": [
         {
           "executionId": "44143212369-1",
@@ -1164,24 +1166,24 @@
           ]
         }
       ],
-      "executionDate": "2026-11-17",
-      "schemaVersion": 1,
+      "playDate": "2026-11-19",
+      "outcome": "Informational",
+      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
+      "booked": null,
       "executionId": "44143212369-1",
       "requested": null,
-      "players": 2,
-      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
-      "outcome": "Informational",
-      "booked": null,
-      "participants": [],
-      "playDate": "2026-11-19",
+      "finishedAt": "2026-11-17T20:00:09.882707543+01:00",
+      "startedAt": "2026-11-17T19:36:33.388873991+01:00",
       "confirmedAt": null,
-      "bookingFormStartedAt": null
+      "executionDate": "2026-11-17"
     },
     {
-      "finishedAt": "2026-11-18T20:00:13.651982673+01:00",
       "bookingDurationSeconds": null,
-      "startedAt": "2026-11-18T19:36:31.200705014+01:00",
+      "participants": [],
+      "schemaVersion": 1,
+      "players": 2,
       "blockedAt": null,
+      "bookingFormStartedAt": null,
       "availability": [
         {
           "executionId": "44364973294-1",
@@ -1591,18 +1593,354 @@
           "options": []
         }
       ],
-      "executionDate": "2026-11-18",
-      "schemaVersion": 1,
+      "playDate": "2026-11-20",
+      "outcome": "Informational",
+      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
+      "booked": null,
       "executionId": "44364973294-1",
       "requested": null,
-      "players": 2,
-      "summary": "No booking row for the target date. Availability inspected for two players and 18 holes; no reservation attempted.",
-      "outcome": "Informational",
-      "booked": null,
-      "participants": [],
-      "playDate": "2026-11-20",
+      "finishedAt": "2026-11-18T20:00:13.651982673+01:00",
+      "startedAt": "2026-11-18T19:36:31.200705014+01:00",
       "confirmedAt": null,
-      "bookingFormStartedAt": null
+      "executionDate": "2026-11-18"
+    },
+    {
+      "bookingDurationSeconds": null,
+      "participants": [],
+      "schemaVersion": 1,
+      "players": 2,
+      "blockedAt": null,
+      "bookingFormStartedAt": null,
+      "availability": [
+        {
+          "executionId": "45030930608-1",
+          "playDate": "2026-11-23",
+          "course": "TEE 1 ROSA",
+          "capturedAt": "2026-11-22T15:09:04.978496591+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": null,
+          "options": [
+            {
+              "time": "08:00",
+              "places": 3,
+              "enabled": true
+            },
+            {
+              "time": "08:40",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "09:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "09:20",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "09:50",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "10:10",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "10:30",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "10:50",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "11:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:30",
+              "places": 2,
+              "enabled": true
+            },
+            {
+              "time": "11:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "11:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "12:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:10",
+              "places": 3,
+              "enabled": true
+            },
+            {
+              "time": "13:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "13:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:00",
+              "places": 3,
+              "enabled": true
+            },
+            {
+              "time": "14:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "14:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "15:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:30",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:40",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "16:50",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:00",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:10",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:20",
+              "places": 4,
+              "enabled": true
+            },
+            {
+              "time": "17:30",
+              "places": 4,
+              "enabled": true
+            }
+          ]
+        },
+        {
+          "executionId": "45030930608-1",
+          "playDate": "2026-11-23",
+          "course": "TEE 1 AMARILLO",
+          "capturedAt": "2026-11-22T15:09:09.968622328+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": null,
+          "options": []
+        },
+        {
+          "executionId": "45030930608-1",
+          "playDate": "2026-11-23",
+          "course": "TEE 1 AMARILLO",
+          "capturedAt": "2026-11-22T15:09:14.999020233+01:00",
+          "players": 2,
+          "holes": 9,
+          "selectedTime": null,
+          "options": []
+        },
+        {
+          "executionId": "45030930608-1",
+          "playDate": "2026-11-23",
+          "course": "TEE 1 VERDE",
+          "capturedAt": "2026-11-22T15:09:19.989861631+01:00",
+          "players": 2,
+          "holes": 18,
+          "selectedTime": null,
+          "options": []
+        }
+      ],
+      "playDate": "2026-11-23",
+      "outcome": "Informational",
+      "summary": "No booking row for the target date. Availability inspected for two players; nine holes checked only where 18-hole times were unavailable. No reservation attempted.",
+      "booked": null,
+      "executionId": "45030930608-1",
+      "requested": null,
+      "finishedAt": "2026-11-22T15:10:10.346450983+01:00",
+      "startedAt": "2026-11-22T15:08:42.487212149+01:00",
+      "confirmedAt": null,
+      "executionDate": "2026-11-22",
+      "screenshots": [
+        {
+          "path": "data/executions/45030930608-1/screenshots/rosa-initial.png",
+          "course": "TEE 1 ROSA",
+          "stage": "initial",
+          "playDate": "2026-11-23",
+          "capturedAt": "2026-11-22T15:09:02.936488305+01:00",
+          "players": 2,
+          "optionCount": 48,
+          "holes": 18
+        },
+        {
+          "path": "data/executions/45030930608-1/screenshots/amarillo-recheck.png",
+          "course": "TEE 1 AMARILLO",
+          "stage": "recheck",
+          "playDate": "2026-11-23",
+          "capturedAt": "2026-11-22T15:09:46.66565571+01:00",
+          "players": 2,
+          "optionCount": 1,
+          "holes": 18
+        },
+        {
+          "path": "data/executions/45030930608-1/screenshots/amarillo-9-recheck.png",
+          "course": "TEE 1 AMARILLO",
+          "stage": "recheck",
+          "playDate": "2026-11-23",
+          "capturedAt": "2026-11-22T15:09:58.255124844+01:00",
+          "players": 2,
+          "optionCount": 1,
+          "holes": 9
+        },
+        {
+          "path": "data/executions/45030930608-1/screenshots/verde-recheck.png",
+          "course": "TEE 1 VERDE",
+          "stage": "recheck",
+          "playDate": "2026-11-23",
+          "capturedAt": "2026-11-22T15:10:10.226471323+01:00",
+          "players": 2,
+          "optionCount": 1,
+          "holes": 18
+        }
+      ]
     }
   ]
 }
