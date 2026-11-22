@@ -73,7 +73,7 @@ export function screenshotViewer(dialog) {
     minus.disabled = true; plus.disabled = true; fitButton.disabled = true;
     dialog.querySelector('.screenshot-zoom').value = '--';
     dialog.querySelector('.screenshot-title').textContent = names[selected.course]+' / '+(selected.holes ?? 18)+' holes / '+(selected.stage === 'initial' ? 'Initial' : 'Recheck');
-    dialog.querySelector('.screenshot-meta').textContent = captureTime(selected.capturedAt)+' | '+selected.players+' players | '+selected.optionCount+' options | Rendered snapshot';
+    dialog.querySelector('.screenshot-meta').textContent = captureTime(selected.capturedAt)+' | '+selected.players+' players | '+selected.optionCount+' options | '+(selected.rendering === 'redacted-real-form-v1' ? 'Real website screenshot (redacted)' : 'Rendered snapshot');
     dialog.querySelector('.screenshot-position').textContent = (index+1)+' of '+images.length;
     dialog.querySelector('[data-image-action="previous"]').disabled = index === 0;
     dialog.querySelector('[data-image-action="next"]').disabled = index === images.length-1;

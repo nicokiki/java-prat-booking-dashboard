@@ -10,6 +10,14 @@ test('older executions have no image gallery and valid metadata stays unchanged'
   assert.deepEqual(executionScreenshots({...report,screenshots:undefined}),[]);
   assert.deepEqual(executionScreenshots(report),[image]);
 });
+
+test('real website provenance and tall dimensions survive image selection',()=> {
+  const real = {...image,rendering:'redacted-real-form-v1',width:704,height:3340,optionCount:152};
+  assert.deepEqual(executionScreenshots({...report,screenshots:[real]}),[real]);
+  const fitted=fitZoom(real.width,real.height,330,540);
+  assert.ok(real.width*fitted<=330);
+  assert.ok(real.height*fitted<=540);
+});
 test('images cannot load external URLs, another execution, unsafe paths or invalid metadata',() => {
   for (const change of [{path:'https://example.invalid/private.png'},{path:'data/executions/run-2/screenshots/rosa-initial.png'},
     {path:'../secret.png'},{stage:'raw'},{course:'PRIVATE NAME'},{players:3},{optionCount:501},{optionCount:'52'},

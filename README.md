@@ -115,11 +115,15 @@ Zoomed images scroll inside the viewer. Capture times are the original read time
 not the later rendering or publication time. Missing image files show an unavailable
 state without changing booking outcomes or availability calculations.
 
-The Java workflow renders PNGs only after booking/inspection, report saving and
-email handling. It draws allowlisted selected filters, time/capacity labels and selected/disabled states;
-member-name suffixes and arbitrary text are removed or redacted. These are rendered
-snapshots, not live screenshots taken during booking. Historical images retain
-their original layout. Raw HTML logs are never copied.
+The Java workflow takes real Chrome screenshots while each course is displayed,
+temporarily expanding the native tee-time list to include every row. It crops the
+actual reservation form, excluding the account header; member suffixes and arbitrary
+option labels are redacted, and forms with visible text/password inputs are skipped.
+Original styles, labels, size and scroll position are restored without selecting
+a time or dispatching change/click events. PNG bytes remain in memory until after
+booking/inspection, report saving and email handling. New images are labelled
+**Real website screenshot (redacted)**; historical reconstructed images retain
+their original layout and **Rendered snapshot** label. Raw HTML logs are never copied.
 The publisher checks execution/date/player provenance and PNG integrity, strips
 embedded PNG metadata, and stores images at
 `data/executions/EXECUTION_ID/screenshots/COURSE-STAGE.png` with relative JSON paths.
