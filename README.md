@@ -20,7 +20,7 @@ normalizes it on the next archive update. Existing records are not deleted.
 
 **Steps 1-6 are complete; Step 7 is pending.**
 
-1. **Public-data scope:** approved public booking details, names, and licencias; reports exclude credentials and screenshots.
+1. **Public-data scope:** approved public booking details, names, and licencias; credentials and raw logs are excluded. Sanitized dropdown PNGs are described below.
 2. **Dashboard setup:** created this public repository and enabled GitHub Pages.
 3. **Structured results:** the Java application records outcomes, Madrid timestamps, participants, and observed availability before sending email.
 4. **Publication pipeline:** artifact backup and allowlisted, execution-ID-based publishing are implemented. `DASHBOARD_PUBLISH_TOKEN` is configured in the booking repository's Actions secrets.
@@ -92,8 +92,27 @@ the exported calculation remains auditable. It contains no participant identitie
 Missing times cannot identify purchasers or establish non-member sales or allocation
 reasons. This dashboard documents observations rather than proving a cause.
 
-Run `node --test analysis.test.mjs` for calculation regressions. The dashboard's
-calculation-check workflow runs these tests on pushes and pull requests.
+Run `node --test analysis.test.mjs screenshots.test.mjs` for calculation and
+image-viewer regressions. The check workflow runs these tests on pushes and pull requests.
+
+## Execution PNGs
+
+The Tee times tab shows Initial/Recheck thumbnails when an execution has saved
+`screenshots` references. Older executions without images have no gallery.
+Each PNG contains all dropdown options on one full-height page; the viewer fits
+the complete image first, with minus/plus zoom, a fit reset, and course navigation.
+Zoomed images scroll inside the viewer. Capture times are the original read times,
+not the later rendering or publication time. Missing image files show an unavailable
+state without changing booking outcomes or availability calculations.
+
+The Java workflow renders PNGs only after booking/inspection, report saving and
+email handling. It draws time/capacity labels and selected/disabled states only;
+member-name suffixes and arbitrary text are removed or redacted. These are rendered
+snapshots, not live screenshots taken during booking. Raw HTML logs are never copied.
+The publisher checks execution/date/player provenance and PNG integrity, strips
+embedded PNG metadata, and stores images at
+`data/executions/EXECUTION_ID/screenshots/COURSE-STAGE.png` with relative JSON paths.
+No GitHub artifact URLs, tokens or credentials are embedded in the page.
 
 The publishing secret is configured. The first real record still depends on a normal booking run saving its report and successful publication; it need not be a confirmed booking.
 
@@ -105,8 +124,8 @@ The publishing secret is configured. The first real record still depends on a no
 4. Run it as the repository owner. After the deletion commit and Pages deployment succeed, refresh the dashboard.
 
 The page does not contain a token or directly perform deletion. Only an explicit,
-owner-approved workflow removes the matching execution and its embedded availability
-snapshots from the archive. It preserves other executions and fails without mutation
+owner-approved workflow removes the matching execution, its embedded availability
+snapshots and its PNG directory. It preserves other executions and fails without mutation
 for invalid or missing IDs. A conflicting publication rejects the push safely;
 inspect the failure before retrying the deletion workflow.
 
